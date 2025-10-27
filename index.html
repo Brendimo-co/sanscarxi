@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="az">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Brendimo Spin-to-Win</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="brand">
+      <h1>Brendimo - Şans Çarxı</h1>
+      <p class="subtitle">Lüks, İtalyan ruhu ilə seçilən hədiyyələr üçün spin edin</p>
+    </header>
+
+    <section class="form-section">
+      <form id="entryForm" autocomplete="off">
+        <label for="fullName">Tam Ad</label>
+        <input id="fullName" name="fullName" type="text" placeholder="Adınız və Soyadınız" required />
+
+        <label for="phone">WhatsApp Nömrəsi</label>
+        <input id="phone" name="phone" type="text" placeholder="+994501234567" required />
+
+        <div class="form-actions">
+          <button id="submitBtn" type="submit" class="btn primary">Qatıl və Spin Aktivləşdir</button>
+        </div>
+        <small class="note">Hər müştəri gündə bir dəfə spin edə bilər. İlk spin həmişə xüsusi E kateqoriyasıdır.</small>
+      </form>
+    </section>
+
+    <section class="wheel-section">
+      <div id="wheelWrap" class="wheel-wrap inactive">
+        <canvas id="wheelCanvas" width="700" height="700"></canvas>
+        <button id="spinBtn" class="btn spin disabled" disabled>Çevir</button>
+        <div id="pointer" class="pointer">▼</div>
+      </div>
+    </section>
+
+    <section class="history-section">
+      <h3>Spin Tarixçəniz</h3>
+      <ul id="historyList" class="history-list"></ul>
+    </section>
+  </main>
+
+  <!-- Modal for result -->
+  <div id="resultModal" class="modal hidden">
+    <div class="modal-content">
+      <button id="closeModal" class="modal-close">×</button>
+      <h2 id="resultTitle">Təbriklər!</h2>
+      <p id="resultGift" class="big"></p>
+      <p id="resultTier" class="muted"></p>
+      <div id="resultInstructions" class="instructions"></div>
+      <div id="shareCTA" class="share-cta hidden">
+        <button id="shareBtn" class="btn">Paylaş və 5 AZN Endirim Qazan</button>
+      </div>
+      <div class="modal-actions">
+        <button id="modalOk" class="btn primary">Başa çatdır</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
