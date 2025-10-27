@@ -7,7 +7,7 @@
 /* ===========================
    CONFIG - dəyişdirin burada
    =========================== */
-const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbyLkP2gzZ38WsYg_-g-luPswxRT9l4e4Zp8QodPkmk764M_tTRaAsfEFw1B4OA64bCXog/exec"; // <<-- burada Apps Script URL yerləşdirin
+const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbyp4frCQQuMwmVIodWe8uTZSUMrXGt51j6Mc2QqCdsno4Z9afTvUZUFSBmvIgAKXtDGbg/exec"; // <<-- burada Apps Script URL yerləşdirin
 
 /* ===========================
    Qlobal DOM referansları
@@ -71,10 +71,6 @@ const GIFTS = [
   { id: 'D3', name: 'Dostunla Al – Hər Biriniz üçün 5 AZN Endirim', tier: 'D', weight: 6.25 },
   { id: 'D4', name: 'Paylaş və 5 AZN Endirim Qazan', tier: 'D', weight: 6.25 },
 
-  // E Tier (first spin only) - weight set but we will force E for first spin
-  { id: 'E1', name: '2x Çevirmə (İstədiyi Hədiyyəni Seçə Bilir)', tier: 'E', weight: 0 },
-  { id: 'E2', name: 'Bir Daha Yoxla (Bir Çevrim Şansı Daha)', tier: 'E', weight: 0 },
-  { id: 'E3', name: '“Almost There” Spin (Ödənişsiz Hədiyyə Önünə)', tier: 'E', weight: 0 }
 ];
 
 /* ===========================
@@ -279,13 +275,12 @@ function disableWheelUI() {
 }
 
 /* initialize default wheel (exclude E by default) */
-// INIT: hər zaman bütün hədiyyələrlə çarxı render et
 function initWheel() {
-  // lastRenderedPool bütün GIFTS‑in ardıcıllığını saxlamaq üçün
-  lastRenderedPool = GIFTS.slice(); // A..E hamısı burada
+  lastRenderedPool = GIFTS.slice();
   drawWheel(lastRenderedPool);
 }
 initWheel();
+
 
 
 /* Validate name and phone */
@@ -378,109 +373,47 @@ enableWheelUI();
   }
 });
 
-/* Spin button click */
+// Spin handler (sadələşdirilmiş, əsas məntiq)
 spinBtn.addEventListener('click', async function() {
   if (spinBtn.disabled || isSpinning) return;
-
-  // load session
   const sessRaw = sessionStorage.getItem('brendimo_current');
   if (!sessRaw) { alert('Əvvəlcə formu doldurun və serverə göndərin'); return; }
   const sess = JSON.parse(sessRaw);
   const phone = sess.phone;
   const name = sess.name;
 
-  // Prevent double spin before submit/log
   disableWheelUI();
+  const pool = lastRenderedPool.length ? lastRenderedPool : GIFTS.slice();
 
-  // Decide pool: if firstSpin -> E only; else exclude E
-  const allowE = !!sess.firstSpin;
-  const pool = GIFTS.filter(g => allowE ? g.tier === 'E' : g.tier !== 'E');
+  // Always weighted pick excluding E (E removed anyway)
+  const selected = weightedRandomPick(/* allowE = */ false);
 
-  // For first spin, requirement: the first spin for each unique user always results in E tier.
-  // We will pick uniformly among E-tier items for first spin (since E weights are 0).
-  // For later spins, use weightedRandomPick to respect probabilities.
-  let selected;
-  if (allowE) {
-    // uniform among E-tier
-    const ePool = pool;
-    selected = ePool[Math.floor(Math.random() * ePool.length)];
-  } else {
-    selected = weightedRandomPick(false);
-  }
+  const targetIndex = pool.findIndex(item => item.id === selected.id);
+  const indexToUse = targetIndex >= 0 ? targetIndex : 0;
 
-  // find index of selected in rendered pool (lastRenderedPool)
-  const index = lastRenderedPool.findIndex(item => item.id === selected.id);
-  // If not found (shouldn't), fallback to random index
-  const targetIndex = index >= 0 ? index : 0;
-
-  // Start spin animation then after completion log to server
-  spinToIndex(targetIndex, lastRenderedPool, async function() {
-    // Prepare spin data
-    const spinNumber = sess.serverSpinNumber || 1;
+  spinToIndex(indexToUse, pool, async function() {
+    // prepare log payload
     const payload = {
       action: 'log',
-      name,
-      phone,
-      spinNumber,
+      name: name,
+      phone: phone,
+      spinNumber: (sess.serverSpinNumber || 1),
       giftId: selected.id,
       giftName: selected.name,
       tier: selected.tier
     };
-
     try {
       const resp = await postToApi(payload);
-      // resp expected: { success:true, gift: '...', tier:'...', spinNumber:n, allowedNextSpin: bool, message: '' }
-      // update local state
-      let state = loadState(phone) || { phone, name, spins: [], extraSpins: 0 };
-      const nowIso = new Date().toISOString();
-      state.spins.push({
-        date: nowIso,
-        spinNumber: resp.spinNumber || spinNumber,
-        giftId: selected.id,
-        giftName: selected.name,
-        tier: selected.tier
-      });
-
-      // Handle extra spins rules for E-tier outcomes:
-      if (selected.tier === 'E') {
-        // E tier special rules:
-        if (selected.id === 'E1') {
-          // 2x Çevirmə => grant 2 more spins
-          state.extraSpins = (state.extraSpins || 0) + 2;
-        } else if (selected.id === 'E2' || selected.id === 'E3') {
-          // Bir Daha Yoxla or Almost There => grant 1 more spin
-          state.extraSpins = (state.extraSpins || 0) + 1;
-        }
-      } else {
-        // For non-E Tier winning, if earlier E had extraSpins, consume one extra spin when spinNumber>1?
-        // We will rely on server for per-day limit; local extraSpins used to allow extra client-side second spin display
-      }
-
-      saveState(phone, state);
-      renderHistory(state);
-
-      // Modal display
-      showResultModal(selected, resp);
-
-      // update session to reflect that next spin is not firstSpin
-      sessionStorage.setItem('brendimo_current', JSON.stringify({ phone, name, serverSpinNumber: resp.nextSpinNumber || (spinNumber + 1), firstSpin: false }));
-
-      // If server says next spin allowed, re-enable wheel accordingly
-      if (resp.allowedNextSpin) {
-        enableWheelUI();
-        drawWheel(GIFTS.filter(g => g.tier !== 'E'));
-      } else {
-        disableWheelUI();
-      }
-
+      // handle resp: update local history, modal, re-enable only if resp.allowedNextSpin true
+      // update local state, e.g. saveState and renderHistory
+      // example: showResultModal(selected, resp);
     } catch (err) {
-      console.error(err);
-      alert('Spin qeydiyyatı zamanı problem yarandı');
+      alert('Serverə yazılarkən xəta oldu');
       enableWheelUI();
     }
   });
 });
-
+     
 /* Modal controls */
 closeModal.addEventListener('click', () => { resultModal.classList.add('hidden'); });
 modalOk.addEventListener('click', () => { resultModal.classList.add('hidden'); });
@@ -532,41 +465,41 @@ function renderHistory(state) {
   }
 }
 
-/// postToApi - tries POST, on CORS failure falls back to JSONP GET
+// API_ENDPOINT must be your deployed Apps Script web app URL (from Deploy)
+
 async function postToApi(data) {
-  // attempt POST
+  // Try POST first
   try {
-    const r = await fetch(API_ENDPOINT, {
+    const res = await fetch(API_ENDPOINT, {
       method: 'POST',
       mode: 'cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     });
-    // if response not ok, still try to parse JSON for error
-    const j = await r.json();
-    return j;
+    const json = await res.json();
+    return json;
   } catch (err) {
     console.warn('POST failed, trying JSONP fallback due to CORS or network:', err);
-    // Build JSONP URL with query params (simple serialization)
+
+    // Build query params for JSONP GET
     const params = Object.assign({}, data);
-    // Ensure values are strings and safe
-    const qp = Object.keys(params).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(String(params[k]))).join('&');
-    // create unique callback name
-    const cbName = 'brendimo_cb_' + Math.random().toString(36).slice(2, 9);
-    const url = API_ENDPOINT + '?' + qp + '&callback=' + cbName;
+    const qs = Object.keys(params)
+      .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(String(params[k] || '')))
+      .join('&');
+    const cbName = 'brendimo_cb_' + Math.random().toString(36).slice(2,9);
+    const url = API_ENDPOINT + (qs ? ('?' + qs + '&') : '?') + 'callback=' + cbName;
 
     return new Promise((resolve, reject) => {
-      // timeout in case script doesn't respond
-      const to = setTimeout(() => {
+      const timeout = setTimeout(() => {
         cleanup();
         reject(new Error('JSONP timeout'));
       }, 11000);
 
       function cleanup() {
-        clearTimeout(to);
-        try { window[cbName] = undefined; delete window[cbName]; } catch (e) {}
+        clearTimeout(timeout);
+        try { delete window[cbName]; } catch (e) {}
         const s = document.getElementById(cbName + '_script');
-        if (s) s.parentNode.removeChild(s);
+        if (s && s.parentNode) s.parentNode.removeChild(s);
       }
 
       window[cbName] = function(resp) {
@@ -577,14 +510,12 @@ async function postToApi(data) {
       const script = document.createElement('script');
       script.id = cbName + '_script';
       script.src = url;
-      script.onerror = function(e) {
-        cleanup();
-        reject(new Error('JSONP script error'));
-      };
+      script.onerror = function() { cleanup(); reject(new Error('JSONP script error')); };
       document.body.appendChild(script);
     });
   }
 }
+
 
 /* On load: try to render any existing history for last used phone */
 (function tryLoadLast() {
@@ -681,6 +612,45 @@ spinBtn.addEventListener('click', async function() {
     // (Your existing logic that checks resp.allowedNextSpin should be used)
   });
 });
+
+function showResultModal(selected, resp) {
+  try {
+    console.log('showResultModal running for', selected, resp);
+    resultGiftEl.innerText = selected.name || (resp && resp.gift) || 'Qazandınız';
+    resultTierEl.innerText = 'Kateqoriya: ' + (selected.tier || (resp && resp.tier) || '');
+    let instr = '';
+    if (selected.tier === 'A') instr = 'Təbriklər! Ödənişsiz hədiyyəni tələb edin.';
+    else if (selected.tier === 'B') instr = 'Orta dəyərli hədiyyə. Satınalma zamanı təqdim edin.';
+    else if (selected.tier === 'C') instr = 'Aşağı dəyərli hədiyyə.';
+    else if (selected.tier === 'D') instr = 'Bonus endirim. Paylaşın və istifadə edin.';
+    resultInstructions.innerText = instr;
+
+    // Ensure share CTA visibility logic
+    if (selected.id === 'D4') shareCTA.classList.remove('hidden'); else shareCTA.classList.add('hidden');
+
+    // Force modal visible and top layer
+    resultModal.classList.remove('hidden');
+    resultModal.style.display = 'flex';
+    resultModal.style.zIndex = '99999';
+    // Also ensure background not covering it
+    document.body.style.overflow = 'hidden';
+
+    console.log('Modal shown (styles applied)');
+  } catch (err) {
+    console.error('Error showing modal', err);
+  }
+}
+closeModal.addEventListener('click', () => {
+  resultModal.classList.add('hidden');
+  resultModal.style.display = '';
+  document.body.style.overflow = '';
+});
+modalOk.addEventListener('click', () => {
+  resultModal.classList.add('hidden');
+  resultModal.style.display = '';
+  document.body.style.overflow = '';
+});
+
 
 
 /* Ensure responsive canvas resizing */
