@@ -279,11 +279,14 @@ function disableWheelUI() {
 }
 
 /* initialize default wheel (exclude E by default) */
+// INIT: hər zaman bütün hədiyyələrlə çarxı render et
 function initWheel() {
-  const pool = GIFTS.filter(g => g.tier !== 'E'); // default visual
-  drawWheel(pool);
+  // lastRenderedPool bütün GIFTS‑in ardıcıllığını saxlamaq üçün
+  lastRenderedPool = GIFTS.slice(); // A..E hamısı burada
+  drawWheel(lastRenderedPool);
 }
 initWheel();
+
 
 /* Validate name and phone */
 function validateInputs(name, phone) {
@@ -332,10 +335,24 @@ form.addEventListener('submit', async function(e) {
     state.name = name;
 
     // store firstSpin flag in temporary session object
-    sessionStorage.setItem('brendimo_current', JSON.stringify({ phone, name, serverSpinNumber: resp.spinNumber, firstSpin: resp.firstSpin }));
+   // AFTER server check response (resp) -> saxla session üçün
+// resp.expected sahələri: { allowed: true, spinNumber: 1, firstSpin: true/false }
+sessionStorage.setItem('brendimo_current', JSON.stringify({
+  phone: phone,
+  name: name,
+  serverSpinNumber: resp.spinNumber || 1,
+  firstSpin: !!resp.firstSpin  // true yalnız ilk‑ever istifadəçi üçün
+}));
 
-    // Activate wheel
-    enableWheelUI();
+// Render wheel (always full wheel). But keep visual cue if firstSpin
+if (resp.firstSpin) {
+  // optional: highlight E slices visually by re-drawing same wheel (we keep full wheel)
+  drawWheel(GIFTS.slice());
+} else {
+  drawWheel(GIFTS.slice());
+}
+enableWheelUI();
+
     // re-render wheel depending on allowed: if firstSpin -> render E tier pool (for visual)
     if (resp.firstSpin) {
       // for first spin, show E tier visually (only E items)
@@ -594,6 +611,76 @@ function sanitizePhone(raw) {
   if (/^0\d{9}$/.test(s)) s = '+994' + s.slice(1);
   return s;
 }
+
+spinBtn.addEventListener('click', async function() {
+  if (spinBtn.disabled || isSpinning) return;
+
+  const sessRaw = sessionStorage.getItem('brendimo_current');
+  if (!sessRaw) { alert('Əvvəlcə formu doldurun və serverə göndərin'); return; }
+  const sess = JSON.parse(sessRaw);
+  const phone = sess.phone;
+  const name = sess.name;
+
+  // lock UI during spin
+  disableWheelUI();
+
+  // Ensure wheel pool is full GIFTS (A..E)
+  const pool = lastRenderedPool.length ? lastRenderedPool : GIFTS.slice();
+
+  // Choose selected gift
+  let selected;
+  if (sess.firstSpin) {
+    // FORCE pick from E-tier uniformly for first spin
+    const ePool = GIFTS.filter(g => g.tier === 'E');
+    selected = ePool[Math.floor(Math.random() * ePool.length)];
+  } else {
+    // subsequent spins: weighted pick excluding E
+    selected = weightedRandomPick(false);
+  }
+
+  // find index in the full rendered pool
+  const targetIndex = pool.findIndex(item => item.id === selected.id);
+  const indexToUse = targetIndex >= 0 ? targetIndex : 0;
+
+  // animate and then log
+  spinToIndex(indexToUse, pool, async function() {
+    // AFTER spin animation completes
+
+    // mark firstSpin used
+    sessionStorage.setItem('brendimo_current', JSON.stringify({
+      phone: phone,
+      name: name,
+      serverSpinNumber: (sess.serverSpinNumber || 1) + 1,
+      firstSpin: false
+    }));
+
+    // Prepare payload to log on server
+    const payload = {
+      action: 'log',
+      name: name,
+      phone: phone,
+      spinNumber: (sess.serverSpinNumber || 1),
+      giftId: selected.id,
+      giftName: selected.name,
+      tier: selected.tier
+    };
+
+    try {
+      const resp = await postToApi(payload);
+      // update local state and UI per your existing logic (history, modal, re-enable if allowed)
+      // --- keep your existing post‑log logic here ---
+      // Example minimal:
+      // showResultModal(selected, resp);
+      // update localStorage state and renderHistory...
+    } catch (err) {
+      console.error('Log error', err);
+      alert('Serverə yazılarkən xəta oldu');
+    }
+
+    // Re-enable wheel if server allowed next spin; else keep disabled
+    // (Your existing logic that checks resp.allowedNextSpin should be used)
+  });
+});
 
 
 /* Ensure responsive canvas resizing */
