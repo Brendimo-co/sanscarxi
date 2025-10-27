@@ -10,7 +10,7 @@
 /* ===========================
 CONFIG
 =========================== */
-const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbyp4frCQQuMwmVIodWe8uTZSUMrXGt51j6Mc2QqCdsno4Z9afTvUZUFSBmvIgAKXtDGbg/exec";
+const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbxHDkxUfWKgcWm7Q-mbNvQAUDWLKyRNKtmoRRKIdajz-jkcABc5_etWUq9DYhjUvuHHbQ/exec";
 
 /* ===========================
 DOM refs
@@ -308,6 +308,7 @@ Form submission (check)
 form.addEventListener('submit', async function(e) {
   e.preventDefault();
   if (isSpinning) return;
+
   const name = fullNameInput.value.trim();
   const phoneRaw = phoneInput.value.trim();
   const v = validateInputs(name, phoneRaw);
@@ -322,36 +323,35 @@ form.addEventListener('submit', async function(e) {
     const payload = { action: 'check', name, phone };
     const resp = await postToApi(payload);
 
-    if (!resp || !resp.allowed) {
-      alert(resp && resp.message ? resp.message : 'Bu nömrə üçün bu gün spin icazəsi yoxdur');
-      submitBtn.disabled = false;
-      submitBtn.classList.remove('disabled');
-      submitBtn.innerText = 'Qatıl və Spin Aktivləşdir';
-      return;
-    }
+  if (!resp || !resp.allowed) {
+  alert(resp.message || 'Bu nömrə üçün bu gün spin icazəsi yoxdur');
+  disableWheelUI();
 
-    let state = loadState(phone) || { phone, name, spins: [], extraSpins: 0 };
-    state.name = name;
-    saveState(phone, state);
+  // Optional: show countdown until midnight
+  showCountdownUntilTomorrow();
 
-    const serverFirstSpin = typeof resp.firstSpin !== 'undefined' ? !!resp.firstSpin : (state.spins.length === 0);
+  submitBtn.disabled = false;
+  submitBtn.classList.remove('disabled');
+  submitBtn.innerText = 'Spin aktiv deyil';
+  return;
+}
 
+
+
+    // ✅ Spin allowed
     sessionStorage.setItem('brendimo_current', JSON.stringify({
       phone: phone,
       name: name,
       serverSpinNumber: resp.spinNumber || 1,
-      firstSpin: serverFirstSpin
+      firstSpin: !!resp.firstSpin
     }));
 
-    if (serverFirstSpin) drawWheel(GIFTS.slice());
-    else drawWheel(GIFTS.filter(g => g.tier !== 'E'));
-
+    drawWheel(GIFTS.filter(g => g.tier !== 'E'));
     enableWheelUI();
+
     submitBtn.innerText = 'Spin hazırdır';
     submitBtn.disabled = false;
     submitBtn.classList.remove('disabled');
-
-    renderHistory(state);
 
   } catch (err) {
     console.error(err);
@@ -361,6 +361,29 @@ form.addEventListener('submit', async function(e) {
     submitBtn.innerText = 'Qatıl və Spin Aktivləşdir';
   }
 });
+
+
+
+function showCountdownUntilTomorrow() {
+  const now = new Date();
+  const midnight = new Date(now);
+  midnight.setHours(24, 0, 0, 0);
+  const diffMs = midnight - now;
+
+  const hours = Math.floor(diffMs / (1000 * 60 * 60));
+  const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+
+  const msg = `Növbəti spin ${hours} saat ${minutes} dəqiqə ${seconds} saniyə sonra aktiv olacaq.`;
+  const note = document.createElement('div');
+  note.style.marginTop = '12px';
+  note.style.color = '#ffcc00';
+  note.style.fontSize = '15px';
+  note.innerText = msg;
+
+  submitBtn.parentNode.appendChild(note);
+}
+
 
 /* ===========================
 Consolidated spin handler
@@ -577,4 +600,18 @@ function burstConfetti() {
   } catch(e){ console.warn(e); }
 }
 
+function closeResultModal() {
+  resultModal.classList.add('hidden');
+  resultModal.style.display = 'none';
+  resultModal.style.opacity = '0';
+  document.body.style.overflow = '';
+}
+
+closeModal.addEventListener('click', closeResultModal);
+modalOk.addEventListener('click', closeResultModal);
+
+
+
 /* End of script.js */
+
+
