@@ -102,60 +102,21 @@ body{
 /* ---------- Wheel Hero ---------- */
 .wheel-section{ display:flex; flex-direction:column; align-items:center; gap:10px; padding:6px 0; }
 
-/* wheel card — big, glowing, tactile */
-.wheel-wrap{
-  width:100%;
-  max-width:780px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  border-radius:26px;
-  padding:14px;
-  background: radial-gradient(800px 420px at 12% 18%, rgba(255,221,120,0.03), rgba(0,0,0,0.08));
-  box-shadow: var(--shadow-hero);
-  border: 1px solid rgba(255,255,255,0.04);
-  overflow:visible;
-  transform-origin:center center;
-}
 
-/* sparkling ambient ring */
-.wheel-wrap.sparkle::after{
-  content:'';
-  position:absolute;
-  inset: -18px;
-  border-radius:40%;
-  background: radial-gradient(closest-side, rgba(255,255,255,0.015), transparent 40%);
-  filter: blur(20px) saturate(1.2);
-  pointer-events:none;
-  z-index:10;
-  mix-blend-mode: screen;
-}
-
-/* when spinning, add motion blur and energetic pulse */
-.wheel-wrap.spinning{
-  animation: wheelPulse .9s ease-in-out 1;
-  filter: drop-shadow(0 30px 60px rgba(255,99,120,0.08));
-}
-@keyframes wheelPulse{
-  0%{ transform: scale(1); }
-  50%{ transform: scale(1.008) rotate(-0.2deg); }
-  100%{ transform: scale(1); }
-}
-
-/* winning state: intense glow and flare */
-.wheel-wrap.win{
-  box-shadow: 0 360px 120px rgba(255,110,150,0.2), 0 18px 60px rgba(17,153,218,0.06);
-  animation: winPop .45s ease-out 1;
-}
-@keyframes winPop{
-  0%{ transform: scale(.985); filter: blur(0); }
-  60%{ transform: scale(1.03); filter: blur(.8px); }
-  100%{ transform: scale(1); }
-}
 
 /* canvas styling */
-
+canvas#wheelCanvas{
+  width: 100%;
+  height: 100%;
+  max-width: 66vw;
+  max-height: 66vw;
+  border-radius:60px;
+  display:block;
+  z-index:3;
+  background: transparent;
+  box-shadow: 0 14px 36px rgba(2,6,23,0.7), inset 0 -6px 18px rgba(0,0,0,0.45);
+  transform-origin:center center;
+}
 
 /* pointer indicator */
 .pointer{
