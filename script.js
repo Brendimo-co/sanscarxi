@@ -535,11 +535,9 @@ Responsive canvas resize
 =========================== */
 window.addEventListener('resize', () => {
   // Get visible container size
-  const rect = wheelCanvas.getBoundingClientRect();
+ const minSize = Math.min(window.innerWidth, window.innerHeight) * 0.9;
+const size = minSize;
 
-  // Force minimum canvas area (avoid becoming too small)
-  const minSize = Math.min(window.innerWidth, window.innerHeight) * 0.9;
-  const size = Math.min(rect.width || minSize, rect.height || minSize);
 
   // Apply physical pixel ratio scaling for sharpness
   wheelCanvas.width = size * devicePixelRatio;
