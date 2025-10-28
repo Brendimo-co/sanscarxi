@@ -37,8 +37,8 @@ const resultTitle = document.getElementById('resultTitle');
 Gifts configuration
 =========================== */
 const GIFTS = [
-  // A Tier (0.05%)
-  { id: 'A1', name: 'Ödənişsiz Hədiyyə', tier: 'A', weight: 0.05 },
+  // A Tier (0.005%)
+  { id: 'A1', name: 'Sən Seç Hədiyyə', tier: 'A', weight: 0.005 },
   // B Tier (total 4.95%, 10 items each 0.495%)
   { id: 'B1', name: '15 AZN Endirim', tier: 'B', weight: 0.495 },
   { id: 'B2', name: 'La Coste Qolbaq', tier: 'B', weight: 0.495 },
@@ -46,7 +46,7 @@ const GIFTS = [
   { id: 'B4', name: 'Qalstuk Dəsti', tier: 'B', weight: 0.495 },
   { id: 'B5', name: 'Armani Parfüm', tier: 'B', weight: 0.495 },
   { id: 'B6', name: 'Hermes Qalstuk', tier: 'B', weight: 0.495 },
-  { id: 'B7', name: 'Premium Kəmər', tier: 'B', weight: 0.495 },
+  { id: 'B7', name: 'Premium Kəmər', tier: 'B', weight: 0.4995 },
   { id: 'B8', name: 'Premium Kaşelok', tier: 'B', weight: 0.495 },
   { id: 'B9', name: 'Təsbeh', tier: 'B', weight: 0.495 },
   { id: 'B10', name: 'Qələm', tier: 'B', weight: 0.495 },
@@ -57,10 +57,10 @@ const GIFTS = [
   { id: 'C4', name: 'Qolbaq', tier: 'C', weight: 14 },
   { id: 'C5', name: 'Saat', tier: 'C', weight: 14 },
   // D Tier (25% total, 4 items 6.25% each)
-  { id: 'D1', name: '2 Məhsul Aldıqda 10 AZN Endirim', tier: 'D', weight: 6.25 },
+  { id: 'D1', name: '2 Məhsul - 10 AZN Endirim', tier: 'D', weight: 6.25 },
   { id: 'D2', name: '10 AZN Endirim (30 Dəqiqə İçində)', tier: 'D', weight: 6.25 },
-  { id: 'D3', name: 'Dostunla Al – Hər Biriniz üçün 5 AZN Endirim', tier: 'D', weight: 6.25 },
-  { id: 'D4', name: 'Paylaş və 5 AZN Endirim Qazan', tier: 'D', weight: 6.25 },
+  { id: 'D3', name: 'Dostunla Al – 5 AZN + 5 AZN Endirim', tier: 'D', weight: 6.25 },
+  { id: 'D4', name: 'Paylaş – 5 AZN Endirim', tier: 'D', weight: 6.25 },
   // E Tier (special first-spin items) - empty in GIFTS as none were provided earlier;
   // if you want E items, add objects with tier: 'E' here.
 ];
@@ -324,7 +324,7 @@ form.addEventListener('submit', async function(e) {
     const resp = await postToApi(payload);
 
   if (!resp || !resp.allowed) {
-  alert(resp.message || 'Bu nömrə üçün bu gün spin icazəsi yoxdur');
+  alert(resp.message || 'Bu nömrə üçün bu gün icazə yoxdur');
   disableWheelUI();
 
   // Optional: show countdown until midnight
