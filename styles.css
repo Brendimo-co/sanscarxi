@@ -125,8 +125,8 @@ body{
   border-radius: 60%;
   background: radial-gradient(circle at 40% 20%, rgba(255,255,255,0.04), transparent 10%);
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: center;
   box-shadow: 0 0 30px rgba(255, 204, 0, 0.1);
   user-select: none;
 }
