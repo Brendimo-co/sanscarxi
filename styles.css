@@ -471,3 +471,50 @@ input[type="text"]:focus {
     max-width: 480px;
   }
 }
+
+/* Ensure wheel isn't covered by the fixed/floating spin button */
+:root {
+  --spin-button-safe-space: calc(64px + env(safe-area-inset-bottom, 12px));
+}
+
+/* Make the page content reserve space for the fixed/sticky spin button */
+.container {
+  padding-bottom: var(--spin-button-safe-space);
+}
+
+/* Ensure wheel sits above background but below modal and button layering is correct */
+.wheel-wrap {
+  position: relative;
+  z-index: 2;
+}
+
+/* Spin button should remain on top of content but not hide the wheel when scrolled */
+.btn.spin {
+  z-index: 130;
+}
+
+/* Make canvas responsive but constrained to available viewport height */
+#wheelCanvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: calc(100vh - 160px); /* reserve space for header, other UI and spin button */
+  object-fit: contain;
+}
+
+/* If the wheel is inside a scrollable container allow scrolling to reveal it */
+.wheel-section {
+  overflow: visible;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 6px;
+}
+
+/* On small screens increase margin below wheel so it can scroll above the fixed button */
+@media (max-width: 768px) {
+  .wheel-section {
+    margin-bottom: calc(16px + var(--spin-button-safe-space));
+  }
+  .wheel-wrap {
+    max-width: 92%;
+  }
+}
