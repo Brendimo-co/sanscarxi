@@ -1,267 +1,290 @@
-/* Brendimo Spin-to-Win — styles.css
-   Big, colorful, tactile UI focused on the wheel as the hero element.
-   Responsive, mobile-first, with accessible contrast and lively micro-interactions.
+/* Brendimo Dopamine CSS
+   Mobile-first. Full stylesheet — paste into styles.css
+   Focus: ultra-satisfying visuals, motion, and micro-feedback.
 */
 
-/* ---------- Reset & base ---------- */
+/* ---------- Tokens ---------- */
 :root{
-  --bg-1: #0f1724;           /* deep navy */
-  --bg-2: linear-gradient(135deg,#071226 0%, #0b2a3f 50%, #072b20 100%);
-  --card: rgba(255,255,255,0.04);
-  --muted: #b7c1cd;
-  --accent-1: #ffd166;       /* gold */
-  --accent-2: #ef476f;       /* pink/red */
-  --accent-3: #06d6a0;       /* green */
-  --accent-4: #118ab2;       /* blue */
+  --bg-deep: #050914;
+  --bg-velvet: linear-gradient(135deg,#071226 0%, #0b2a3f 45%, #052826 100%);
   --glass: rgba(255,255,255,0.04);
   --glass-strong: rgba(0,0,0,0.6);
-  --success: #12b886;
+  --muted: #b7c1cd;
+  --text: #eff6ff;
+  --accent-gold: #ffd166;
+  --accent-hot: #ff5b89;
+  --accent-cyan: #2be7c8;
+  --accent-blue: #1197d6;
+  --success: #12c48b;
   --danger: #ff6b6b;
-  --max-width: 1100px;
-  --ui-radius: 14px;
-  --shadow-1: 0 8px 30px rgba(2,6,23,0.6);
-  --shadow-2: 0 6px 18px rgba(12,20,30,0.5);
-  --text: #e6eef6;
-  --glass-border: rgba(255,255,255,0.06);
-  --pointer-size: 36px;
+  --ui-radius: 18px;
+  --max-width: 1200px;
+  --wheel-size-mobile: min(88vw, 520px);
+  --wheel-edge-glow: 16px;
+  --shadow-hero: 0 30px 80px rgba(2,6,23,0.8);
+  --shadow-soft: 0 10px 28px rgba(2,6,23,0.55);
+  --confetti-z: 999999;
+  --pointer-size: 44px;
+  --spin-duration: 5200ms;
 }
 
+/* ---------- Reset ---------- */
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
   margin:0;
   min-height:100%;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  background: var(--bg-2);
-  color: var(--text);
+  font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui;
+  background: var(--bg-velvet);
+  color:var(--text);
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
-  overflow-y:scroll;
-  padding: 36px 18px;
+  padding:18px;
   display:flex;
   justify-content:center;
   align-items:flex-start;
 }
 
-/* ---------- Layout container ---------- */
+/* ---------- Layout ---------- */
 .container{
   width:100%;
   max-width:var(--max-width);
-  margin: 0 auto;
+  margin:0 auto;
   display:grid;
-  gap: 28px;
-  grid-template-columns: 420px 1fr;
+  gap:16px;
+  grid-template-columns: 1fr;
   align-items:start;
-  align-content:start;
+  padding-bottom:48px;
+}
+@media (min-width:960px){
+  .container{ grid-template-columns: 420px 1fr; gap:28px; }
 }
 
-/* On small screens stack everything */
-@media (max-width: 920px){
-  .container{ grid-template-columns: 1fr; padding-bottom:64px; }
-}
+/* ---------- Header ---------- */
+.brand{ display:flex; flex-direction:column; gap:6px; }
+.brand h1{ margin:0; font-size:20px; font-weight:800; letter-spacing:0.2px; color:var(--text); text-shadow: 0 8px 30px rgba(0,0,0,0.6); }
+.subtitle{ margin:0; color:var(--muted); font-size:13px; }
 
-/* ---------- Brand / header ---------- */
-.brand{
-  grid-column: 1 / -1;
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-  align-items:flex-start;
-  margin-bottom: 2px;
-}
-.brand h1{
-  margin:0;
-  font-size:24px;
-  letter-spacing:0.4px;
-  font-weight:700;
-  color: linear-gradient(90deg,#fff,#e6eef6);
-  text-shadow: 0 6px 30px rgba(0,0,0,0.6);
-}
-.subtitle{
-  margin:0;
-  color:var(--muted);
-  font-size:14px;
-}
-
-/* ---------- Form column (left) ---------- */
+/* ---------- Form ---------- */
 .form-section{
-  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.1));
-  border-radius: var(--ui-radius);
-  padding:18px;
-  box-shadow: var(--shadow-2);
-  border: 1px solid var(--glass-border);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.05));
+  border-radius:14px;
+  padding:14px;
+  border:1px solid rgba(255,255,255,0.04);
+  box-shadow: var(--shadow-soft);
 }
-
-.form-section label{
-  display:block;
-  font-size:13px;
-  margin-top:12px;
-  color:var(--muted);
-}
+.form-section label{ display:block; font-size:13px; margin-top:10px; color:var(--muted); }
 .form-section input[type="text"]{
   width:100%;
   padding:12px 14px;
   margin-top:8px;
-  border-radius:10px;
+  border-radius:12px;
   border:1px solid rgba(255,255,255,0.04);
-  background: rgba(255,255,255,0.02);
+  background: rgba(255,255,255,0.015);
   color:var(--text);
   font-size:15px;
   outline:none;
-  transition: box-shadow .18s ease, transform .08s ease;
+  transition: box-shadow .15s ease, transform .08s ease;
 }
+.form-section input[type="text"]::placeholder{ color: rgba(255,255,255,0.2); }
 .form-section input[type="text"]:focus{
-  box-shadow: 0 6px 24px rgba(17,138,178,0.12), 0 2px 6px rgba(0,0,0,0.4);
-  transform: translateY(-1px);
-  border-color: rgba(17,138,178,0.6);
+  box-shadow: 0 14px 40px rgba(17,151,218,0.06);
+  border-color: rgba(17,151,218,0.6);
+  transform: translateY(-2px);
 }
+.form-actions{ margin-top:14px; display:flex; gap:10px; align-items:center; }
 
-.form-actions{
-  margin-top:14px;
-  display:flex;
-  gap:8px;
-  align-items:center;
-}
-
+/* CTA buttons with tactile feedback */
 .btn{
   cursor:pointer;
   border:0;
   padding:10px 14px;
-  border-radius:10px;
-  font-weight:600;
-  color: #081223;
-  background: linear-gradient(180deg,var(--accent-1), #ffc94a);
-  box-shadow: 0 8px 24px rgba(13,18,30,0.5), inset 0 -2px 0 rgba(255,255,255,0.06);
-  transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
+  border-radius:12px;
+  font-weight:800;
+  color:#051122;
+  background: linear-gradient(180deg,var(--accent-gold), #ffb84d);
+  box-shadow: 0 14px 36px rgba(255,181,60,0.12), inset 0 -2px 0 rgba(255,255,255,0.06);
+  transition: transform .12s cubic-bezier(.2,.9,.2,1), box-shadow .12s ease, filter .12s ease;
 }
-.btn:active{ transform: translateY(1px) scale(.998); }
-.btn.primary{ background: linear-gradient(180deg,#ffd166,#f7b600); color:#081020; }
-.btn[disabled], .btn.disabled{ opacity:.5; cursor:not-allowed; transform:none; box-shadow:none; }
+.btn:active{ transform: translateY(1px) scale(.996); }
+.btn.primary{ background: linear-gradient(180deg,#ff6f91,#ff3e78); color:#fff; box-shadow: 0 18px 46px rgba(255,62,120,0.16); }
+.btn[disabled], .btn.disabled{ opacity:.45; cursor:not-allowed; transform:none; box-shadow:none; }
 
-/* small note */
-.note{ display:block; margin-top:12px; color:var(--muted); font-size:12px; }
+/* note */
+.note{ display:block; margin-top:10px; color:var(--muted); font-size:12px; }
 
-/* ---------- Wheel column (right) ---------- */
-.wheel-section{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:flex-start;
-  gap:16px;
-  padding-left: 12px;
-}
+/* ---------- Wheel Hero ---------- */
+.wheel-section{ display:flex; flex-direction:column; align-items:center; gap:10px; padding:6px 0; }
 
-/* wheel wrap - hero card */
+/* wheel card — big, glowing, tactile */
 .wheel-wrap{
   width:100%;
-  max-width:720px;
-  aspect-ratio: 1 / 1;
-  background: radial-gradient(1200px 800px at 10% 10%, rgba(255,209,102,0.04), rgba(0,0,0,0.2));
-  border-radius:24px;
-  position:relative;
+  max-width:780px;
   display:flex;
   align-items:center;
   justify-content:center;
-  box-shadow: var(--shadow-1);
-  border: 1px solid rgba(255,255,255,0.03);
-  padding: 18px;
-  transform-origin:center center;
-  transition: transform .18s ease, filter .18s ease, opacity .18s ease;
+  position:relative;
+  border-radius:26px;
+  padding:14px;
+  background: radial-gradient(800px 420px at 12% 18%, rgba(255,221,120,0.03), rgba(0,0,0,0.08));
+  box-shadow: var(--shadow-hero);
+  border: 1px solid rgba(255,255,255,0.04);
   overflow:visible;
+  transform-origin:center center;
 }
 
-/* when inactive, dim the wheel */
-.wheel-wrap.inactive{ opacity:0.6; filter:grayscale(.04) contrast(.9) blur(0.0px); }
+/* sparkling ambient ring */
+.wheel-wrap.sparkle::after{
+  content:'';
+  position:absolute;
+  inset: -18px;
+  border-radius:40%;
+  background: radial-gradient(closest-side, rgba(255,255,255,0.015), transparent 40%);
+  filter: blur(20px) saturate(1.2);
+  pointer-events:none;
+  z-index:10;
+  mix-blend-mode: screen;
+}
 
-/* Canvas styles */
+/* when spinning, add motion blur and energetic pulse */
+.wheel-wrap.spinning{
+  animation: wheelPulse .9s ease-in-out 1;
+  filter: drop-shadow(0 30px 60px rgba(255,99,120,0.08));
+}
+@keyframes wheelPulse{
+  0%{ transform: scale(1); }
+  50%{ transform: scale(1.008) rotate(-0.2deg); }
+  100%{ transform: scale(1); }
+}
+
+/* winning state: intense glow and flare */
+.wheel-wrap.win{
+  box-shadow: 0 36px 120px rgba(255,110,150,0.2), 0 18px 60px rgba(17,153,218,0.06);
+  animation: winPop .45s ease-out 1;
+}
+@keyframes winPop{
+  0%{ transform: scale(.985); filter: blur(0); }
+  60%{ transform: scale(1.03); filter: blur(.8px); }
+  100%{ transform: scale(1); }
+}
+
+/* canvas styling */
 canvas#wheelCanvas{
-  width:100%;
-  height:100%;
+  width: var(--wheel-size-mobile);
+  height: var(--wheel-size-mobile);
+  max-width: 86vw;
+  max-height: 86vw;
   border-radius:999px;
   display:block;
+  z-index:3;
   background: transparent;
+  box-shadow: 0 14px 36px rgba(2,6,23,0.7), inset 0 -6px 18px rgba(0,0,0,0.45);
+  transform-origin:center center;
 }
 
-/* pointer - top indicator */
+/* pointer indicator */
 .pointer{
   position:absolute;
-  top:8px;
+  top:10px;
   left:50%;
   transform:translateX(-50%);
-  width: var(--pointer-size);
-  height: var(--pointer-size);
+  width:var(--pointer-size);
+  height:var(--pointer-size);
   display:flex;
   align-items:center;
   justify-content:center;
   color:#fff;
-  font-size:18px;
+  font-weight:900;
   z-index:120;
-  filter: drop-shadow(0 6px 18px rgba(0,0,0,0.6));
+  background: linear-gradient(180deg,#ffffff10,#00000030);
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  text-shadow: 0 4px 12px rgba(0,0,0,0.6);
   pointer-events:none;
-  text-shadow:0 3px 12px rgba(0,0,0,0.6);
-  transition: transform .18s ease;
+  transform-origin:center;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.6));
+  transition: transform .18s cubic-bezier(.2,.9,.2,1);
 }
 
-/* spin button centered over wheel bottom */
+/* pointer micro-bounce */
+.pointer.idle{ animation: pointerIdle 3s ease-in-out infinite; }
+@keyframes pointerIdle{
+  0%,100%{ transform: translateX(-50%) translateY(0) rotate(0); }
+  50%{ transform: translateX(-50%) translateY(-5px) rotate(-1deg); }
+}
+
+/* spin button — pill, large, neon edge */
 #spinBtn{
   position:absolute;
-  bottom:28px;
+  bottom:22px;
   left:50%;
   transform:translateX(-50%);
   z-index:110;
   border-radius:999px;
-  padding:14px 26px;
+  padding:16px 26px;
   font-size:18px;
+  font-weight:900;
   letter-spacing:0.6px;
-  background: linear-gradient(180deg,#ff6584,#ef476f);
   color:#fff;
-  box-shadow: 0 12px 36px rgba(239,71,111,0.22), 0 4px 12px rgba(0,0,0,0.6);
+  background: linear-gradient(180deg,var(--accent-hot), #ff2e6b);
+  box-shadow: 0 24px 72px rgba(255,46,107,0.18), 0 8px 22px rgba(0,0,0,0.5);
   border: 1px solid rgba(255,255,255,0.06);
-  transform-origin:center;
+  transition: transform .12s cubic-bezier(.2,.9,.2,1), box-shadow .12s ease;
 }
+#spinBtn:active{ transform: translateY(1px) scale(.997); }
 
-/* disabled visual */
+/* disabled state */
 .wheel-wrap.inactive #spinBtn,
-#spinBtn.disabled{ background:linear-gradient(180deg, #7a8896, #5b6570); color: #dfe7ef; box-shadow:none; }
-
-/* wheel slice labels fallback (for small screens) */
-@media (max-width: 540px){
-  .wheel-wrap{ border-radius:18px; padding:12px }
-  #spinBtn{ bottom:18px; padding:12px 18px; font-size:16px; }
+#spinBtn.disabled{
+  background: linear-gradient(180deg,#6f7b86,#4f5962);
+  box-shadow:none;
+  color:#dfe7ef;
 }
 
-/* ---------- History & info ---------- */
+/* kinetic micro-ripple on press (accessible) */
+#spinBtn:focus{ outline: 3px solid rgba(255,90,130,0.10); outline-offset:4px; }
+
+/* ---------- History and side UI ---------- */
 .history-section{
-  background: rgba(255,255,255,0.02);
-  border-radius: 12px;
-  padding: 14px;
-  color:var(--muted);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04));
+  border-radius:12px;
+  padding:12px;
   border:1px solid rgba(255,255,255,0.03);
-  box-shadow: 0 6px 22px rgba(2,6,23,0.45);
-  min-height:120px;
+  box-shadow: var(--shadow-soft);
+  color:var(--muted);
+  min-height:110px;
 }
-.history-section h3{ margin:0 0 8px 0; color:var(--text) }
-.history-list{
-  margin:0;
-  padding:0;
-  list-style:none;
-  max-height:220px;
-  overflow:auto;
-}
+.history-section h3{ margin:0 0 8px 0; color:var(--text); }
+.history-list{ margin:0; padding:0; list-style:none; max-height:220px; overflow:auto; }
 .history-list li{
   font-size:13px;
-  padding:8px 10px;
-  border-radius:8px;
-  margin-bottom:8px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.07));
-  color:var(--muted);
+  padding:10px 12px;
+  border-radius:10px;
+  margin-bottom:10px;
   display:flex;
   align-items:center;
-  gap:8px;
+  justify-content:space-between;
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.05));
+  color:var(--muted);
 }
+
+/* small badge for tiers */
+.tier-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 8px;
+  border-radius:999px;
+  font-weight:800;
+  font-size:12px;
+  color:#06121a;
+}
+.tier-A{ background: linear-gradient(180deg,#ffd54d,#ffb800); }
+.tier-B{ background: linear-gradient(180deg,#d6c0a1,#b68c56); color:#06121a; }
+.tier-C{ background: linear-gradient(180deg,#9fe6c9,#7bdca3); color:#04261d; }
+.tier-D{ background: linear-gradient(180deg,#a9d8ff,#6faefc); color:#05263a; }
 
 /* ---------- Modal ---------- */
 .modal{
@@ -271,98 +294,107 @@ canvas#wheelCanvas{
   align-items:center;
   justify-content:center;
   padding:20px;
-  z-index:99999;
-  backdrop-filter: blur(6px) saturate(1.05);
+  z-index:999999;
+  backdrop-filter: blur(10px) saturate(1.1);
 }
 .modal:not(.hidden){ display:flex; }
-
 .modal-content{
   width:100%;
-  max-width:520px;
-  border-radius:18px;
-  padding:20px;
-  background: linear-gradient(180deg, rgba(10,18,30,0.9), rgba(6,12,22,0.95));
-  border: 1px solid rgba(255,255,255,0.04);
-  box-shadow: 0 20px 60px rgba(2,6,23,0.7);
-  color:var(--text);
+  max-width:560px;
+  border-radius:16px;
+  padding:18px;
+  background: linear-gradient(180deg, rgba(6,12,20,0.98), rgba(8,18,30,0.99));
+  border:1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 30px 90px rgba(2,6,23,0.85);
 }
-.modal-close{
-  position:absolute;
-  right:20px;
-  top:20px;
-  background:transparent;
-  color:var(--muted);
-  border:0;
-  font-size:22px;
-  cursor:pointer;
-}
-.big{ font-size:20px; font-weight:700; margin:8px 0 6px 0; color:#fff; }
+.modal-close{ position:absolute; right:22px; top:20px; background:transparent; color:var(--muted); border:0; font-size:22px; cursor:pointer; }
+.big{ font-size:20px; font-weight:900; margin:8px 0 6px 0; color:#fff; }
 .muted{ color:var(--muted); margin:0 0 8px 0; }
-.instructions{ margin-top:8px; color:var(--muted); font-size:14px; min-height:36px; }
+.instructions{ min-height:44px; color:var(--muted); }
 
 /* ---------- Share CTA ---------- */
 .share-cta{
   position:fixed;
-  right:18px;
-  bottom:18px;
-  z-index:9999;
+  right:16px;
+  bottom:16px;
+  z-index:99999;
 }
-.share-cta .btn{ background: linear-gradient(180deg,#06d6a0,#05b683); color:#042028; box-shadow: 0 8px 28px rgba(6,214,160,0.12); }
+.share-cta .btn{ background: linear-gradient(180deg,var(--accent-cyan), #00d2b3); color:#021115; font-weight:900; box-shadow: 0 14px 40px rgba(2,210,179,0.12); }
 
-/* ---------- Confetti pieces (JS-created) ---------- */
+/* ---------- Confetti pieces ---------- */
 .confetti-piece{
   width:10px;
   height:16px;
-  border-radius:2px;
+  border-radius:3px;
   will-change: transform, opacity;
   box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  position:fixed;
+  z-index: var(--confetti-z);
 }
 
-/* ---------- Micro interactions & decorations ---------- */
-/* subtle halo behind wheel center */
-.wheel-wrap::before{
-  content:'';
+/* animated sparkles that appear on win */
+.win-spark{
   position:absolute;
-  width:70%;
-  height:70%;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  background: radial-gradient(circle at 40% 30%, rgba(255,241,178,0.06), rgba(0,0,0,0.05) 40%, transparent 60%);
+  width:8px;
+  height:8px;
   border-radius:50%;
-  z-index:1;
+  background: radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,0.8));
+  box-shadow: 0 6px 20px rgba(255,160,120,0.18);
+  will-change: transform, opacity;
   pointer-events:none;
 }
 
-/* active pulse when spin begins */
-.wheel-wrap.spinning{ animation: wheelPulse .9s ease-in-out 1; }
-@keyframes wheelPulse{
-  0%{ transform: scale(1); filter: drop-shadow(0 6px 25px rgba(17,138,178,0.06)); }
-  50%{ transform: scale(1.006); filter: drop-shadow(0 24px 48px rgba(17,138,178,0.12)); }
-  100%{ transform: scale(1); }
+/* ---------- Micro-animations ---------- */
+/* subtle rotational shimmer on wheel rim when idle */
+.wheel-wrap.sparkle canvas{
+  transition: filter 400ms ease;
 }
-
-/* small glow on pointer */
-.pointer{
-  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.12));
-  padding:6px 8px;
+/* shimmer animation overlay via pseudo element if desired */
+.wheel-wrap::before{
+  content:'';
+  position:absolute;
+  inset:6%;
   border-radius:999px;
-  border:1px solid rgba(255,255,255,0.04);
+  background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00) 40%, rgba(255,255,255,0.02) 60%);
+  transform: translateX(-18%);
+  mix-blend-mode: overlay;
+  opacity:0.6;
+  pointer-events:none;
+  z-index:2;
+  filter: blur(8px);
+  transition: transform .9s cubic-bezier(.2,.9,.2,1);
+}
+.wheel-wrap.spinning::before{ transform: translateX(18%); opacity:1; }
+
+/* vibration like small scale on each spin tick (JS should add/remove .tick briefly) */
+.wheel-wrap.tick{ transform: scale(1.003); transition: transform 120ms cubic-bezier(.2,.9,.2,1); }
+
+/* ---------- Accessibility focus states ---------- */
+button:focus, input:focus{ outline: 3px solid rgba(255,90,130,0.10); outline-offset:4px; }
+
+/* ---------- Responsive adjustments ---------- */
+@media (max-width:600px){
+  :root{ --pointer-size:40px; --wheel-edge-glow:12px; }
+  canvas#wheelCanvas{ width: calc(min(92vw, 520px)); height: calc(min(92vw, 520px)); }
+  #spinBtn{ padding:14px 20px; font-size:16px; }
 }
 
-/* focus styles for accessibility */
-button:focus, input:focus{ outline: 3px solid rgba(17,138,178,0.14); outline-offset:3px; }
+/* ---------- Desktop polish ---------- */
+@media (min-width:960px){
+  canvas#wheelCanvas{ width: min(640px,66vw); height: min(640px,66vw); }
+  .wheel-wrap{ border-radius:28px; padding:22px; }
+  .pointer{ top:12px; --pointer-size:52px; }
+}
 
-/* ---------- Utility / helpers ---------- */
+/* ---------- Utility ---------- */
 .hidden{ display:none !important; }
-.invisible{ visibility:hidden !important; }
 .center{text-align:center}
 
-/* ---------- Small screens adjustments ---------- */
-@media (max-width:640px){
-  .container{ gap:16px; padding: 18px; }
-  .form-section{ order:2 }
-  .wheel-section{ order:1 }
-  .history-section{ order:3; }
-  .brand h1{ font-size:20px; }
-}
+/* ---------- Developer Notes ----------
+ - Add class .spinning to .wheel-wrap at spin start to amplify motion and shimmer.
+ - Add class .win to .wheel-wrap on win to trigger glow and extra particles for ~2200ms.
+ - JS should create and animate .win-spark elements around canvas center for micro-sparks.
+ - Use navigator.vibrate for haptics and play audio hooks for SFX.
+ - Keep canvas resizing logic crisp for retina devices.
+ - Cue confetti and additional sparkles timed to when the wheel slows and stops to maximize dopamine.
+*/
