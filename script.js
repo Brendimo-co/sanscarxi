@@ -534,16 +534,29 @@ function showResultModal(selected, resp) {
 Responsive canvas resize
 =========================== */
 window.addEventListener('resize', () => {
+  // Get visible container size
   const rect = wheelCanvas.getBoundingClientRect();
-  wheelCanvas.width = rect.width * devicePixelRatio;
-  wheelCanvas.height = rect.height * devicePixelRatio;
-  canvasSize = Math.min(wheelCanvas.width, wheelCanvas.height);
-  center = { x: wheelCanvas.width/2, y: wheelCanvas.height/2 };
+
+  // Force minimum canvas area (avoid becoming too small)
+  const minSize = Math.min(window.innerWidth, window.innerHeight) * 0.9;
+  const size = Math.min(rect.width || minSize, rect.height || minSize);
+
+  // Apply physical pixel ratio scaling for sharpness
+  wheelCanvas.width = size * devicePixelRatio;
+  wheelCanvas.height = size * devicePixelRatio;
+
+  canvasSize = size * devicePixelRatio;
+  center = { x: wheelCanvas.width / 2, y: wheelCanvas.height / 2 };
   radius = canvasSize / 2 - 20;
+
   ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
-  drawWheel(lastRenderedPool.length ? lastRenderedPool : GIFTS.filter(g=>g.tier!=='E'));
+
+  drawWheel(lastRenderedPool.length ? lastRenderedPool : GIFTS.filter(g => g.tier !== 'E'));
 });
+
+// Run once on load
 window.dispatchEvent(new Event('resize'));
+
 
 /* ===========================
 On load: render last local history
