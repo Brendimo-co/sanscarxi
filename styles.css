@@ -406,6 +406,60 @@ canvas#wheelCanvas {
   margin-top: 24px;
 }
 
+/* ---------- FIX FOR MOBILE VIEW ---------- */
+body {
+  align-items: center; /* instead of flex-start */
+  padding: 12px;
+}
+
+/* Make sure wheel is centered and fully visible */
+.wheel-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  margin-top: 20px;
+}
+
+/* Ensure the wheel scales properly on mobile */
+canvas#wheelCanvas {
+  width: min(90vw, 420px) !important;
+  height: min(90vw, 420px) !important;
+  max-width: unset;
+  max-height: unset;
+}
+
+/* Adjust wheel container padding and centering */
+.wheel-wrap {
+  overflow: visible;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center;
+}
+
+/* Pointer and spin button adjustments */
+.pointer {
+  top: 6px;
+}
+
+#spinBtn {
+  bottom: 12px;
+  transform: translateX(-50%);
+  font-size: 16px;
+  padding: 12px 22px;
+}
+
+/* Slight layout improvement for form below wheel */
+.form-section {
+  margin-top: 24px;
+}
+
+
 /* ---------- Developer Notes ----------
  - Add class .spinning to .wheel-wrap at spin start to amplify motion and shimmer.
  - Add class .win to .wheel-wrap on win to trigger glow and extra particles for ~2200ms.
