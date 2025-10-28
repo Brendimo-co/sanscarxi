@@ -1,512 +1,368 @@
-:root {
-  --bg: #0a0a0f;
-  --card: #121218;
-  --accent: #ffcc00;
-  --accent-dark: #cc9900;
-  --muted: #b0b0b0;
-  --white: #fff;
-  --glass: rgba(255, 255, 255, 0.05);
-  --shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
-  --glow: 0 0 12px rgba(255, 204, 0, 0.6);
+/* Brendimo Spin-to-Win — styles.css
+   Big, colorful, tactile UI focused on the wheel as the hero element.
+   Responsive, mobile-first, with accessible contrast and lively micro-interactions.
+*/
+
+/* ---------- Reset & base ---------- */
+:root{
+  --bg-1: #0f1724;           /* deep navy */
+  --bg-2: linear-gradient(135deg,#071226 0%, #0b2a3f 50%, #072b20 100%);
+  --card: rgba(255,255,255,0.04);
+  --muted: #b7c1cd;
+  --accent-1: #ffd166;       /* gold */
+  --accent-2: #ef476f;       /* pink/red */
+  --accent-3: #06d6a0;       /* green */
+  --accent-4: #118ab2;       /* blue */
+  --glass: rgba(255,255,255,0.04);
+  --glass-strong: rgba(0,0,0,0.6);
+  --success: #12b886;
+  --danger: #ff6b6b;
+  --max-width: 1100px;
+  --ui-radius: 14px;
+  --shadow-1: 0 8px 30px rgba(2,6,23,0.6);
+  --shadow-2: 0 6px 18px rgba(12,20,30,0.5);
+  --text: #e6eef6;
+  --glass-border: rgba(255,255,255,0.06);
+  --pointer-size: 36px;
 }
 
-/* Reset and base */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-html {
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
-body {
-  font-family: 'Segoe UI', Roboto, sans-serif;
-  background: radial-gradient(circle at top, #0a0a0f, #000);
-  color: var(--muted);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: center;
-  padding: 16px;
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  min-height:100%;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: var(--bg-2);
+  color: var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-y:scroll;
+  padding: 36px 18px;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
 }
 
-/* Container */
-.container {
-  width: 100%;
-  max-width: 1100px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border-radius: 12px;
-  padding: 16px;
-    padding-bottom: var(--spin-button-safe-space); /* added here */
-  box-shadow: var(--shadow);
-  border: 1px solid rgba(255,255,255,0.04);
-}
-
-/* Header */
-.brand h1 {
-  color: var(--white);
-  font-size: 32px;
-  text-shadow: var(--glow);
-}
-.subtitle {
-  margin: 8px 0 20px;
-  color: var(--muted);
-  font-size: 16px;
-}
-
-/* Form */
-.form-section {
-  margin-bottom: 24px;
-}
-label {
-  display: block;
-  margin: 10px 0 6px;
-  font-size: 14px;
-  color: var(--muted);
-}
-input[type="text"] {
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.06);
-  background: var(--glass);
-  color: var(--white);
-  font-size: 16px;
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
-}
-input[type="text"]:focus {
-  box-shadow: 0 0 12px rgba(255, 204, 0, 0.3);
-  transform: translateY(-1px);
-}
-
-/* Buttons */
-.btn {
-  border: none;
-  padding: 12px 16px;
-  border-radius: 10px;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 16px;
-  width: 100%;
-  box-sizing: border-box;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.btn.primary {
-  background: linear-gradient(90deg, var(--accent), var(--accent-dark));
-  color: var(--white);
-  box-shadow: 0 0 16px rgba(255, 204, 0, 0.3);
-}
-.btn.primary:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(255, 204, 0, 0.5);
-}
-.btn.spin {
-  font-size: 18px;
-  font-weight: 700;
-  text-transform: uppercase;
-  background: linear-gradient(90deg, var(--accent), var(--accent-dark));
-  color: var(--white);
-  box-shadow: 0 0 20px rgba(255, 204, 0, 0.4);
-  border: none;
-  border-radius: 10px;
-  padding: 10px 15px;
-  cursor: pointer;
-  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
-  left: 50%;
-  bottom: 12px;
-  z-index: 10;
-  width: 100%;
-  max-width: 360px;
-  margin: 16px auto 0;
-  animation: pulseGlow 2s infinite;
-    transform: translateX(-50%);
-
-}
-
-
-.btn.spin:hover {
-  transform: translateX(-50%) scale(1.06);
-}
-.btn.spin:active {
-  transform: translateX(-50%) scale(0.98);
-}
-
-
-@keyframes pulseGlow {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(255, 204, 0, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 28px rgba(255, 204, 0, 0.6);
-  }
-}
-
-.btn.disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-/* Wheel */
-.wheel-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 24px 0;
-}
-.wheel-wrap {
-  width: 100%;
-  max-width: 360px;
-  aspect-ratio: 1 / 1;
-  position: relative;
-  border-radius: 50%;
-  background: radial-gradient(circle at 40% 20%, rgba(255,255,255,0.04), transparent 10%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 30px rgba(255, 204, 0, 0.1);
-  user-select: none;
+/* ---------- Layout container ---------- */
+.container{
+  width:100%;
+  max-width:var(--max-width);
   margin: 0 auto;
+  display:grid;
+  gap: 28px;
+  grid-template-columns: 420px 1fr;
+  align-items:start;
+  align-content:start;
 }
 
-.wheel-wrap.inactive {
-  opacity: 0.6;
-  filter: grayscale(0.1) contrast(0.9);
-}
-.wheel-wrap.spinning {
-  animation: spinToWin 3.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-}
-@keyframes spinToWin {
-  0% { transform: rotate(0deg); }
-  85% { transform: rotate(1440deg); }
-  100% { transform: rotate(1460deg); }
+/* On small screens stack everything */
+@media (max-width: 920px){
+  .container{ grid-template-columns: 1fr; padding-bottom:64px; }
 }
 
-#wheelCanvas {
-  width: 100%;
-  height: auto;
-  max-width: 360px;
+/* ---------- Brand / header ---------- */
+.brand{
+  grid-column: 1 / -1;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  align-items:flex-start;
+  margin-bottom: 2px;
+}
+.brand h1{
+  margin:0;
+  font-size:24px;
+  letter-spacing:0.4px;
+  font-weight:700;
+  color: linear-gradient(90deg,#fff,#e6eef6);
+  text-shadow: 0 6px 30px rgba(0,0,0,0.6);
+}
+.subtitle{
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
 }
 
-
-/* Pointer */
-.pointer {
-  position: absolute;
-  top: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 24px;
-  color: var(--accent);
-  text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+/* ---------- Form column (left) ---------- */
+.form-section{
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.1));
+  border-radius: var(--ui-radius);
+  padding:18px;
+  box-shadow: var(--shadow-2);
+  border: 1px solid var(--glass-border);
 }
 
-/* History */
-.history-section {
-  margin-top: 20px;
+.form-section label{
+  display:block;
+  font-size:13px;
+  margin-top:12px;
+  color:var(--muted);
 }
-.history-section h3 {
-  font-size: 18px;
-  color: var(--white);
-  margin-bottom: 12px;
+.form-section input[type="text"]{
+  width:100%;
+  padding:12px 14px;
+  margin-top:8px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.04);
+  background: rgba(255,255,255,0.02);
+  color:var(--text);
+  font-size:15px;
+  outline:none;
+  transition: box-shadow .18s ease, transform .08s ease;
 }
-.history-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.history-list li {
-  background: var(--glass);
-  padding: 12px 16px;
-  border-radius: 10px;
-  color: var(--white);
-  font-size: 15px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-  transition: transform 0.2s ease;
-}
-.history-list li:hover {
-  transform: scale(1.02);
+.form-section input[type="text"]:focus{
+  box-shadow: 0 6px 24px rgba(17,138,178,0.12), 0 2px 6px rgba(0,0,0,0.4);
+  transform: translateY(-1px);
+  border-color: rgba(17,138,178,0.6);
 }
 
-/* Modal */
-.modal {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0,0,0,0.6);
-  z-index: 100;
+.form-actions{
+  margin-top:14px;
+  display:flex;
+  gap:8px;
+  align-items:center;
 }
-.modal.hidden {
-  display: none;
+
+.btn{
+  cursor:pointer;
+  border:0;
+  padding:10px 14px;
+  border-radius:10px;
+  font-weight:600;
+  color: #081223;
+  background: linear-gradient(180deg,var(--accent-1), #ffc94a);
+  box-shadow: 0 8px 24px rgba(13,18,30,0.5), inset 0 -2px 0 rgba(255,255,255,0.06);
+  transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
 }
-.modal-content {
-  width: 100%;
-  max-width: 90%;
-  background: linear-gradient(180deg, #0b0b0b, #1a1a1a);
-  padding: 20px;
-  border-radius: 14px;
-  color: var(--white);
-  box-shadow: var(--shadow);
-  position: relative;
-  border: 1px solid rgba(255,255,255,0.05);
-  animation: popIn 0.4s ease-out;
+.btn:active{ transform: translateY(1px) scale(.998); }
+.btn.primary{ background: linear-gradient(180deg,#ffd166,#f7b600); color:#081020; }
+.btn[disabled], .btn.disabled{ opacity:.5; cursor:not-allowed; transform:none; box-shadow:none; }
+
+/* small note */
+.note{ display:block; margin-top:12px; color:var(--muted); font-size:12px; }
+
+/* ---------- Wheel column (right) ---------- */
+.wheel-section{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  gap:16px;
+  padding-left: 12px;
 }
-@keyframes popIn {
-  0% { transform: scale(0.8); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+
+/* wheel wrap - hero card */
+.wheel-wrap{
+  width:100%;
+  max-width:720px;
+  aspect-ratio: 1 / 1;
+  background: radial-gradient(1200px 800px at 10% 10%, rgba(255,209,102,0.04), rgba(0,0,0,0.2));
+  border-radius:24px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow: var(--shadow-1);
+  border: 1px solid rgba(255,255,255,0.03);
+  padding: 18px;
+  transform-origin:center center;
+  transition: transform .18s ease, filter .18s ease, opacity .18s ease;
+  overflow:visible;
 }
-.modal-close {
-  position: absolute;
-  right: 14px;
-  top: 10px;
+
+/* when inactive, dim the wheel */
+.wheel-wrap.inactive{ opacity:0.6; filter:grayscale(.04) contrast(.9) blur(0.0px); }
+
+/* Canvas styles */
+canvas#wheelCanvas{
+  width:100%;
+  height:100%;
+  border-radius:999px;
+  display:block;
   background: transparent;
-  color: var(--muted);
-  font-size: 24px;
-  border: none;
-  cursor: pointer;
-}
-.big {
-  font-size: 22px;
-  margin: 8px 0 14px;
-  color: var(--accent);
-}
-.muted {
-  color: var(--muted);
-  font-size: 14px;
-}
-.instructions {
-  margin: 10px 0 14px;
-  color: var(--muted);
-}
-.share-cta {
-  margin: 12px 0;
-}
-.share-cta .btn {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.08);
-  color: var(--muted);
 }
 
-/* Confetti */
-.confetti-piece {
-  position: fixed;
-  width: 10px;
-  height: 16px;
-  border-radius: 3px;
-  pointer-events: none;
-  z-index: 999999;
-  animation: fall 1.5s ease-out forwards;
-  background: hsl(calc(360 * var(--i)), 100%, 50%);
-  left: calc(50% + (var(--i) - 5) * 20px);
-}
-@keyframes fall {
-  0% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(400px) rotate(720deg);
-    opacity: 0;
-  }
+/* pointer - top indicator */
+.pointer{
+  position:absolute;
+  top:8px;
+  left:50%;
+  transform:translateX(-50%);
+  width: var(--pointer-size);
+  height: var(--pointer-size);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:18px;
+  z-index:120;
+  filter: drop-shadow(0 6px 18px rgba(0,0,0,0.6));
+  pointer-events:none;
+  text-shadow:0 3px 12px rgba(0,0,0,0.6);
+  transition: transform .18s ease;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  :root {
-    --touch-size: 48px;
-  }
-
-  /* Ensure safe-area padding on phones with notches */
-  body {
-    padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
-  }
-
-  /* Global touch target increase for interactive elements */
-  button, .btn, input[type="text"], .modal-close {
-    min-height: var(--touch-size);
-    min-width: var(--touch-size);
-    touch-action: manipulation;
-  }
-
-  /* Scale down heavy shadows on small screens for performance and clarity */
-  :root {
-    --shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
-    --glow: 0 0 8px rgba(255, 204, 0, 0.45);
-  }
-
-  .brand h1 {
-    font-size: 20px;
-    text-align: center;
-  }
-
-  .subtitle {
-    font-size: 14px;
-    text-align: center;
-    margin-bottom: 12px;
-  }
-
-  /* Form inputs and spacing */
-  .form-section {
-    margin-bottom: 16px;
-  }
-  label {
-    font-size: 13px;
-    margin-top: 8px;
-  }
-  input[type="text"] {
-    padding: 12px;
-    font-size: 15px;
-    border-radius: 12px;
-  }
-
-  /* Wheel: make it larger relative to width but not overflow */
-  .wheel-section {
-    margin: 18px 0;
-    padding: 0 6px;
-  }
-  .wheel-wrap {
-    max-width: 92%;
-    aspect-ratio: 1/1;
-    border-radius: 50%;
-    padding: 6px;
-  }
-  #wheelCanvas {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  /* Pointer reposition for tight headers */
-  .pointer {
-    top: 6px;
-    font-size: 20px;
-    left: 50%;
-  }
-
-  /* Sticky spin button: pinned above keyboard and safe-area bottom */
-  .btn.spin {
-    position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: calc(env(safe-area-inset-bottom, 12px) + 12px);
-    width: calc(100% - 32px);
-    max-width: 520px;
-    border-radius: 12px;
-    padding: 14px 18px;
-    font-size: 16px;
-    z-index: 120;
-    margin: 0;
-  }
-
-  /* Make sure disabled state still tappable but visually subdued */
-  .btn.disabled {
-    pointer-events: none;
-    opacity: 0.5;
-  }
-
-  /* History: compact card layout, allow horizontal scrolling for long lists */
-  .history-section {
-    margin-top: 14px;
-  }
-  .history-list {
-    gap: 10px;
-  }
-  .history-list li {
-    padding: 10px 12px;
-    font-size: 14px;
-  }
-
-  /* Modal: full screen on small devices with scrollable content */
-  .modal-content {
-    width: calc(100% - 24px);
-    max-width: 760px;
-    max-height: calc(100vh - 64px);
-    overflow-y: auto;
-    border-radius: 12px;
-    padding: 16px;
-  }
-  .modal-close {
-    right: 10px;
-    top: 8px;
-    font-size: 22px;
-  }
-
-  /* Confetti performance: reduce size/duration */
-  .confetti-piece {
-    width: 8px;
-    height: 12px;
-    animation-duration: 1.2s;
-  }
-
-  /* Reduce animations to conserve battery and avoid motion sickness */
-  @media (prefers-reduced-motion: reduce) {
-    .wheel-wrap.spinning,
-    .btn.spin,
-    .confetti-piece,
-    .modal-content {
-      animation: none !important;
-      transition: none !important;
-    }
-  }
+/* spin button centered over wheel bottom */
+#spinBtn{
+  position:absolute;
+  bottom:28px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:110;
+  border-radius:999px;
+  padding:14px 26px;
+  font-size:18px;
+  letter-spacing:0.6px;
+  background: linear-gradient(180deg,#ff6584,#ef476f);
+  color:#fff;
+  box-shadow: 0 12px 36px rgba(239,71,111,0.22), 0 4px 12px rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.06);
+  transform-origin:center;
 }
 
-/* Extra-large small screens (phones in landscape / small tablets) */
-@media (min-width: 481px) and (max-width: 1024px) {
+/* disabled visual */
+.wheel-wrap.inactive #spinBtn,
+#spinBtn.disabled{ background:linear-gradient(180deg, #7a8896, #5b6570); color: #dfe7ef; box-shadow:none; }
 
-  .brand h1 {
-    font-size: 24px;
-  }
-  .btn.spin {
-    max-width: 480px;
-  }
+/* wheel slice labels fallback (for small screens) */
+@media (max-width: 540px){
+  .wheel-wrap{ border-radius:18px; padding:12px }
+  #spinBtn{ bottom:18px; padding:12px 18px; font-size:16px; }
 }
 
-/* Ensure wheel isn't covered by the fixed/floating spin button */
-:root {
-  --spin-button-safe-space: calc(64px + env(safe-area-inset-bottom, 12px));
+/* ---------- History & info ---------- */
+.history-section{
+  background: rgba(255,255,255,0.02);
+  border-radius: 12px;
+  padding: 14px;
+  color:var(--muted);
+  border:1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 6px 22px rgba(2,6,23,0.45);
+  min-height:120px;
+}
+.history-section h3{ margin:0 0 8px 0; color:var(--text) }
+.history-list{
+  margin:0;
+  padding:0;
+  list-style:none;
+  max-height:220px;
+  overflow:auto;
+}
+.history-list li{
+  font-size:13px;
+  padding:8px 10px;
+  border-radius:8px;
+  margin-bottom:8px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.07));
+  color:var(--muted);
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
 
-/* Make the page content reserve space for the fixed/sticky spin button */
+/* ---------- Modal ---------- */
+.modal{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:99999;
+  backdrop-filter: blur(6px) saturate(1.05);
+}
+.modal:not(.hidden){ display:flex; }
 
+.modal-content{
+  width:100%;
+  max-width:520px;
+  border-radius:18px;
+  padding:20px;
+  background: linear-gradient(180deg, rgba(10,18,30,0.9), rgba(6,12,22,0.95));
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 20px 60px rgba(2,6,23,0.7);
+  color:var(--text);
+}
+.modal-close{
+  position:absolute;
+  right:20px;
+  top:20px;
+  background:transparent;
+  color:var(--muted);
+  border:0;
+  font-size:22px;
+  cursor:pointer;
+}
+.big{ font-size:20px; font-weight:700; margin:8px 0 6px 0; color:#fff; }
+.muted{ color:var(--muted); margin:0 0 8px 0; }
+.instructions{ margin-top:8px; color:var(--muted); font-size:14px; min-height:36px; }
 
-/* Ensure wheel sits above background but below modal and button layering is correct */
-.wheel-wrap {
-  position: relative;
-  z-index: 2;
+/* ---------- Share CTA ---------- */
+.share-cta{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:9999;
+}
+.share-cta .btn{ background: linear-gradient(180deg,#06d6a0,#05b683); color:#042028; box-shadow: 0 8px 28px rgba(6,214,160,0.12); }
+
+/* ---------- Confetti pieces (JS-created) ---------- */
+.confetti-piece{
+  width:10px;
+  height:16px;
+  border-radius:2px;
+  will-change: transform, opacity;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
 }
 
-/* Spin button should remain on top of content but not hide the wheel when scrolled */
-.btn.spin {
-  z-index: 130;
+/* ---------- Micro interactions & decorations ---------- */
+/* subtle halo behind wheel center */
+.wheel-wrap::before{
+  content:'';
+  position:absolute;
+  width:70%;
+  height:70%;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  background: radial-gradient(circle at 40% 30%, rgba(255,241,178,0.06), rgba(0,0,0,0.05) 40%, transparent 60%);
+  border-radius:50%;
+  z-index:1;
+  pointer-events:none;
 }
 
-/* Make canvas responsive but constrained to available viewport height */
-#wheelCanvas {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: calc(100vh - 160px); /* reserve space for header, other UI and spin button */
-  object-fit: contain;
+/* active pulse when spin begins */
+.wheel-wrap.spinning{ animation: wheelPulse .9s ease-in-out 1; }
+@keyframes wheelPulse{
+  0%{ transform: scale(1); filter: drop-shadow(0 6px 25px rgba(17,138,178,0.06)); }
+  50%{ transform: scale(1.006); filter: drop-shadow(0 24px 48px rgba(17,138,178,0.12)); }
+  100%{ transform: scale(1); }
 }
 
-/* If the wheel is inside a scrollable container allow scrolling to reveal it */
-.wheel-section {
-  overflow: visible;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 6px;
+/* small glow on pointer */
+.pointer{
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.12));
+  padding:6px 8px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.04);
 }
 
-/* On small screens increase margin below wheel so it can scroll above the fixed button */
-@media (max-width: 768px) {
-  .wheel-section {
-    margin-bottom: calc(16px + var(--spin-button-safe-space));
-  }
-  .wheel-wrap {
-    max-width: 92%;
-  }
+/* focus styles for accessibility */
+button:focus, input:focus{ outline: 3px solid rgba(17,138,178,0.14); outline-offset:3px; }
+
+/* ---------- Utility / helpers ---------- */
+.hidden{ display:none !important; }
+.invisible{ visibility:hidden !important; }
+.center{text-align:center}
+
+/* ---------- Small screens adjustments ---------- */
+@media (max-width:640px){
+  .container{ gap:16px; padding: 18px; }
+  .form-section{ order:2 }
+  .wheel-section{ order:1 }
+  .history-section{ order:3; }
+  .brand h1{ font-size:20px; }
 }
