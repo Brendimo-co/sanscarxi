@@ -169,14 +169,7 @@ body{
   100%{ transform: scale(1); }
 }
 
-/* canvas styling */
-canvas#wheelCanvas {
-  width: min(90vw, 420px) !important;
-  height: min(90vw, 420px) !important;
-  display: block;
-  margin: 0 auto;
-  border-radius: 50%;
-}
+
 
 
 /* pointer indicator */
