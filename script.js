@@ -57,10 +57,10 @@ const GIFTS = [
   { id: 'C4', name: 'Qolbaq', tier: 'C', weight: 14 },
   { id: 'C5', name: 'Saat', tier: 'C', weight: 14 },
   // D Tier (25% total, 4 items 6.25% each)
-  { id: 'D1', name: '2 Məhsul - 10 AZN Endirim', tier: 'D', weight: 6.25 },
-  { id: 'D2', name: '10 AZN Endirim (30 Dəqiqə İçində)', tier: 'D', weight: 6.25 },
-  { id: 'D3', name: 'Dostunla Al – 5 AZN + 5 AZN Endirim', tier: 'D', weight: 6.25 },
-  { id: 'D4', name: 'Paylaş – 5 AZN Endirim', tier: 'D', weight: 6.25 },
+  { id: 'D1', name: '2 - 10', tier: 'D', weight: 6.25 },
+  { id: 'D2', name: 'Indi 10', tier: 'D', weight: 6.25 },
+  { id: 'D3', name: 'Dostunla 5 Endirim', tier: 'D', weight: 6.25 },
+  { id: 'D4', name: 'Paylaş 5', tier: 'D', weight: 6.25 },
   // E Tier (special first-spin items) - empty in GIFTS as none were provided earlier;
   // if you want E items, add objects with tier: 'E' here.
 ];
