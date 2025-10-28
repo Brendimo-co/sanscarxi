@@ -112,12 +112,22 @@ Canvas wheel rendering + animation
 
 const canvas = wheelCanvas;
 const ctx = canvas.getContext('2d');
-let canvasSize = Math.min(canvas.width, canvas.height);
+
+// Dynamically match canvas to visible size
+function setCanvasDimensions() {
+  const size = Math.min(window.innerWidth, window.innerHeight) * 0.9;
+  canvas.width = size * devicePixelRatio;
+  canvas.height = size * devicePixelRatio;
+
+  ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+
+  return size * devicePixelRatio;
+}
+
+let canvasSize = setCanvasDimensions();
 let center = { x: canvas.width / 2, y: canvas.height / 2 };
 let radius = canvasSize / 2 - 20;
-let currentRotation = 0;
-let isSpinning = false;
-let lastRenderedPool = [];
+
 
 function shadeColor(hex, percent) {
   var f = parseInt(hex.slice(1), 16), t = percent < 0 ? 0 : 255, p = percent < 0 ? percent * -1 : percent;
