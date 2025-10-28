@@ -156,8 +156,8 @@ body{
 
 /* canvas styling */
 canvas#wheelCanvas{
-  width: var(--wheel-size-mobile);
-  height: var(--wheel-size-mobile);
+  width: 100%;
+  height: 100%;
   max-width: 86vw;
   max-height: 86vw;
   border-radius:999px;
@@ -342,7 +342,7 @@ canvas#wheelCanvas{
 }
 
 /* ---------- Desktop polish ---------- */
-@media (min-width:960px){
+@media (min-width:600px){
   canvas#wheelCanvas{ width: min(500px,66vw); height: min(500px,66vw); }
   .wheel-wrap{ border-radius:28px; padding:22px; }
   .pointer{ top:12px; --pointer-size:52px; }
