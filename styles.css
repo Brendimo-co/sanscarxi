@@ -39,6 +39,7 @@ body {
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
   border-radius: 12px;
   padding: 16px;
+    padding-bottom: var(--spin-button-safe-space); /* added here */
   box-shadow: var(--shadow);
   border: 1px solid rgba(255,255,255,0.04);
 }
@@ -338,11 +339,6 @@ input[type="text"]:focus {
     --glow: 0 0 8px rgba(255, 204, 0, 0.45);
   }
 
-  .container {
-    padding: 14px;
-    border-radius: 12px;
-  }
-
   .brand h1 {
     font-size: 20px;
     text-align: center;
@@ -461,9 +457,7 @@ input[type="text"]:focus {
 
 /* Extra-large small screens (phones in landscape / small tablets) */
 @media (min-width: 481px) and (max-width: 1024px) {
-  .container {
-    padding: 18px;
-  }
+
   .brand h1 {
     font-size: 24px;
   }
@@ -478,9 +472,7 @@ input[type="text"]:focus {
 }
 
 /* Make the page content reserve space for the fixed/sticky spin button */
-.container {
-  padding-bottom: var(--spin-button-safe-space);
-}
+
 
 /* Ensure wheel sits above background but below modal and button layering is correct */
 .wheel-wrap {
