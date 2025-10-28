@@ -56,8 +56,8 @@ body{
   align-items:start;
   padding-bottom:48px;
 }
-@media (min-width:960px){
-  .container{ grid-template-columns: 420px 1fr; gap:28px; }
+@media (min-width:60px){
+  .container{ grid-template-columns: 800px 1fr; gap:28px; }
 }
 
 /* ---------- Header ---------- */
@@ -174,7 +174,7 @@ canvas#wheelCanvas{
   height: var(--wheel-size-mobile);
   max-width: 86vw;
   max-height: 86vw;
-  border-radius:999px;
+  border-radius:99px;
   display:block;
   z-index:3;
   background: transparent;
@@ -397,4 +397,41 @@ button:focus, input:focus{ outline: 3px solid rgba(255,90,130,0.10); outline-off
  - Use navigator.vibrate for haptics and play audio hooks for SFX.
  - Keep canvas resizing logic crisp for retina devices.
  - Cue confetti and additional sparkles timed to when the wheel slows and stops to maximize dopamine.
-*/
+*/:root {
+  --wheel-size: clamp(280px, 80vw, 640px);
+  --pointer-size: clamp(36px, 6vw, 52px);
+}
+
+.wheel-wrap {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  width: var(--wheel-size);
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+canvas#wheelCanvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.pointer {
+  position: absolute;
+  top: 2%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--pointer-size);
+  height: var(--pointer-size);
+}
+
+#spinBtn {
+  position: absolute;
+  bottom: 2%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: clamp(14px, 2vw, 20px);
+  padding: clamp(10px, 2vw, 18px) clamp(18px, 3vw, 26px);
+}
