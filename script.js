@@ -508,10 +508,10 @@ function showResultModal(selected, resp) {
     resultGiftEl.innerText = selected.name || (resp && resp.gift) || 'Qazandınız';
     resultTierEl.innerText = 'Kateqoriya: ' + (selected.tier || (resp && resp.tier) || '');
     let instr = '';
-    if (selected.tier === 'A') instr = 'Təbriklər! Ödənişsiz hədiyyəni tələb edin.';
-    else if (selected.tier === 'B') instr = 'Orta dəyərli hədiyyə. Satınalma zamanı təqdim edin.';
-    else if (selected.tier === 'C') instr = 'Aşağı dəyərli hədiyyə.';
-    else if (selected.tier === 'D') instr = 'Bonus endirim. Paylaşın və istifadə edin.';
+    if (selected.tier === 'A') instr = 'Təbriklər! Qazand;n;z.';
+    else if (selected.tier === 'B') instr = '';
+    else if (selected.tier === 'C') instr = '';
+    else if (selected.tier === 'D') instr = '';
     else instr = (resp && resp.message) ? resp.message : '';
     resultInstructions.innerText = instr;
 
