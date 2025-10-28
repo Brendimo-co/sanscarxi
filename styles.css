@@ -334,6 +334,19 @@ canvas#wheelCanvas{
 /* subtle rotational shimmer on wheel rim when idle */
 
 
+/* ---------- Responsive adjustments ---------- */
+@media (max-width:600px){
+  :root{ --pointer-size:40px; --wheel-edge-glow:12px; }
+  canvas#wheelCanvas{ width: calc(min(92vw, 520px)); height: calc(min(92vw, 520px)); }
+  #spinBtn{ padding:14px 20px; font-size:16px; }
+}
+
+/* ---------- Desktop polish ---------- */
+@media (min-width:600px){
+  canvas#wheelCanvas{ width: min(500px,66vw); height: min(500px,66vw); }
+  .wheel-wrap{ border-radius:28px; padding:22px; }
+  .pointer{ top:12px; --pointer-size:52px; }
+}
 
 /* ---------- Utility ---------- */
 .hidden{ display:none !important; }
