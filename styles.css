@@ -353,16 +353,38 @@ canvas#wheelCanvas {
 }
 
 /* ---------- Desktop polish ---------- */
-@media (min-width:600px){
-  canvas#wheelCanvas{ width: min(500px,66vw); height: min(500px,66vw); }
-  .wheel-wrap{ border-radius:28px; padding:22px; }
-  .pointer{ top:12px; --pointer-size:52px; }
+@media (max-width: 768px) {
+  .wheel-wrap {
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+  }
+
+  #wheelCanvas {
+    width: 100%;
+    height: auto;
+  }
+@media (max-width: 820px) {
+  .wheel-wrap {
+    width: 420px;
+    height: 420px;
+  }
+  #wheelCanvas {
+    width: 420px;
+    height: 420px;
+  }
 }
 
-/* ---------- Utility ---------- */
-.hidden{ display:none !important; }
-.center{text-align:center}
-
+@media (max-width: 420px) {
+  .wheel-wrap {
+    width: 320px;
+    height: 320px;
+  }
+  #wheelCanvas {
+    width: 320px;
+    height: 320px;
+  }
+}
 
 /* ---------- FIX FOR MOBILE VIEW ---------- */
 body {
