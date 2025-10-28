@@ -109,24 +109,14 @@ function weightedRandomPick(allowE = false) {
 /* ===========================
 Canvas wheel rendering + animation
 =========================== */
-
 const canvas = wheelCanvas;
 const ctx = canvas.getContext('2d');
-
-// Dynamically match canvas to visible size
-function setCanvasDimensions() {
-  const size = Math.min(window.innerWidth, window.innerHeight) * 0.9;
-  canvas.width = size * devicePixelRatio;
-  canvas.height = size * devicePixelRatio;
-
-  ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
-
-  return size * devicePixelRatio;
-}
-
-let canvasSize = setCanvasDimensions();
-let center = { x: canvas.width / 2, y: canvas.height / 2 };
-let radius = canvasSize / 2 - 20;
+let canvasSize = Math.min(canvas.width, canvas.height);
+let center = { x: canvas.width / 1, y: canvas.height / 1 };
+let radius = canvasSize / 1 - 0;
+let currentRotation = 0;
+let isSpinning = false;
+let lastRenderedPool = [];
 
 
 function shadeColor(hex, percent) {
