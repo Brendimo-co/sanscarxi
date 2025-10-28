@@ -110,22 +110,31 @@ body{
 
 
 /* wheel card — big, glowing, tactile */
-.wheel-wrap{
-  width:100%;
-  max-width:780px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  border-radius:26px;
-  padding:14px;
-  background: radial-gradient(800px 420px at 12% 18%, rgba(255,221,120,0.03), rgba(0,0,0,0.08));
-  box-shadow: var(--shadow-hero);
-  border: 1px solid rgba(255,255,255,0.04);
-  overflow:visible;
-  transform-origin:center center;
+/* Wheel */
+.wheel-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 24px 0;
 }
 
+.wheel-wrap {
+  width: 700px;
+  height: 700px;
+  position: relative;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 20%, rgba(255,255,255,0.04), transparent 10%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 30px rgba(255, 204, 0, 0.1);
+  user-select: none;
+}
+
+.wheel-wrap.inactive {
+  opacity: 0.6;
+  filter: grayscale(0.1) contrast(0.9);
+}
 
 
 /* when spinning, add motion blur and energetic pulse */
