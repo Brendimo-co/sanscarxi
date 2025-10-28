@@ -45,21 +45,7 @@ body{
   align-items:flex-start;
 }
 
-/* ---------- Layout ---------- */
-.container{
-  width:100%;
-  max-width:var(--max-width);
-  margin:0 auto;
-  display:grid;
-  gap:16px;
-  grid-template-columns: 1fr;
-  align-items:start;
-  padding-bottom:48px;
-}
-@media (min-width:960px){
-  .container{ grid-template-columns: 420px 1fr; gap:28px; }
-}
-
+/
 /* ---------- Header ---------- */
 .brand{ display:flex; flex-direction:column; gap:6px; }
 .brand h1{ margin:0; font-size:20px; font-weight:800; letter-spacing:0.2px; color:var(--text); text-shadow: 0 8px 30px rgba(0,0,0,0.6); }
@@ -159,7 +145,7 @@ body{
 
 /* winning state: intense glow and flare */
 .wheel-wrap.win{
-  box-shadow: 0 36px 120px rgba(255,110,150,0.2), 0 18px 60px rgba(17,153,218,0.06);
+  box-shadow: 0 360px 120px rgba(255,110,150,0.2), 0 18px 60px rgba(17,153,218,0.06);
   animation: winPop .45s ease-out 1;
 }
 @keyframes winPop{
@@ -346,31 +332,7 @@ canvas#wheelCanvas{
 
 /* ---------- Micro-animations ---------- */
 /* subtle rotational shimmer on wheel rim when idle */
-.wheel-wrap.sparkle canvas{
-  transition: filter 400ms ease;
-}
-/* shimmer animation overlay via pseudo element if desired */
-.wheel-wrap::before{
-  content:'';
-  position:absolute;
-  inset:6%;
-  border-radius:999px;
-  background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00) 40%, rgba(255,255,255,0.02) 60%);
-  transform: translateX(-18%);
-  mix-blend-mode: overlay;
-  opacity:0.6;
-  pointer-events:none;
-  z-index:2;
-  filter: blur(8px);
-  transition: transform .9s cubic-bezier(.2,.9,.2,1);
-}
-.wheel-wrap.spinning::before{ transform: translateX(18%); opacity:1; }
 
-/* vibration like small scale on each spin tick (JS should add/remove .tick briefly) */
-.wheel-wrap.tick{ transform: scale(1.003); transition: transform 120ms cubic-bezier(.2,.9,.2,1); }
-
-/* ---------- Accessibility focus states ---------- */
-button:focus, input:focus{ outline: 3px solid rgba(255,90,130,0.10); outline-offset:4px; }
 
 /* ---------- Responsive adjustments ---------- */
 @media (max-width:600px){
@@ -381,7 +343,7 @@ button:focus, input:focus{ outline: 3px solid rgba(255,90,130,0.10); outline-off
 
 /* ---------- Desktop polish ---------- */
 @media (min-width:960px){
-  canvas#wheelCanvas{ width: min(640px,66vw); height: min(640px,66vw); }
+  canvas#wheelCanvas{ width: min(500px,66vw); height: min(500px,66vw); }
   .wheel-wrap{ border-radius:28px; padding:22px; }
   .pointer{ top:12px; --pointer-size:52px; }
 }
