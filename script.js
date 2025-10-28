@@ -38,7 +38,7 @@ Gifts configuration
 =========================== */
 const GIFTS = [
   // A Tier (0.005%)
-  { id: 'A1', name: 'Sən Seç Hədiyyə', tier: 'A', weight: 0.005 },
+  { id: 'A1', name: 'Ödənişsiz Seç', tier: 'A', weight: 0.005 },
   // B Tier (total 4.95%, 10 items each 0.495%)
   { id: 'B1', name: '15 AZN Endirim', tier: 'B', weight: 0.495 },
   { id: 'B2', name: 'La Coste Qolbaq', tier: 'B', weight: 0.495 },
@@ -59,7 +59,7 @@ const GIFTS = [
   // D Tier (25% total, 4 items 6.25% each)
   { id: 'D1', name: '2 - 10', tier: 'D', weight: 6.25 },
   { id: 'D2', name: 'Indi 10', tier: 'D', weight: 6.25 },
-  { id: 'D3', name: 'Dostunla 5 Endirim', tier: 'D', weight: 6.25 },
+  { id: 'D3', name: 'Dostunla 5', tier: 'D', weight: 6.25 },
   { id: 'D4', name: 'Paylaş 5', tier: 'D', weight: 6.25 },
   // E Tier (special first-spin items) - empty in GIFTS as none were provided earlier;
   // if you want E items, add objects with tier: 'E' here.
