@@ -38,27 +38,33 @@ Gifts configuration
 =========================== */
 const GIFTS = [
   // A Tier (0.005%)
-  { id: 'A1', name: 'Ödənişsiz Seç', tier: 'A', weight: 0.005 },
+  { id: 'A1', name: 'Ödənişsiz Seç', tier: 'A', weight: 0.000 },
   // B Tier (total 4.95%, 10 items each 0.495%)
-  { id: 'B1', name: '15 AZN Endirim', tier: 'B', weight: 0.495 },
+  { id: 'B1', name: '15 AZN Endirim', tier: 'B', weight: 0.000 },
+  { id: 'A1', name: 'Qazanmadınız', tier: 'E', weight: 0.005 },
   { id: 'B2', name: 'La Coste Qolbaq', tier: 'B', weight: 0.495 },
   { id: 'B3', name: 'La Coste Parfüm', tier: 'B', weight: 0.495 },
-  { id: 'B4', name: 'Qalstuk Dəsti', tier: 'B', weight: 0.495 },
+  { id: 'B4', name: 'Qalstuk Dəsti', tier: 'B', weight: 0.000 },
   { id: 'B5', name: 'Armani Parfüm', tier: 'B', weight: 0.495 },
+  { id: 'A1', name: 'Qazanmadınız', tier: 'E', weight: 0.000 },
   { id: 'B6', name: 'Hermes Qalstuk', tier: 'B', weight: 0.495 },
-  { id: 'B7', name: 'Premium Kəmər', tier: 'B', weight: 0.4995 },
-  { id: 'B8', name: 'Premium Kaşelok', tier: 'B', weight: 0.495 },
+  { id: 'B7', name: 'Premium Kəmər', tier: 'B', weight: 0.000 },
+  { id: 'B8', name: 'Premium Kaşelok', tier: 'B', weight: 0.000 },
+  { id: 'A1', name: 'Qazanmadınız', tier: 'E', weight: 0.000 },
   { id: 'B9', name: 'Təsbeh', tier: 'B', weight: 0.495 },
   { id: 'B10', name: 'Qələm', tier: 'B', weight: 0.495 },
   // C Tier (70% total, 5 items 14% each)
   { id: 'C1', name: '5 AZN Endirim', tier: 'C', weight: 14 },
+  { id: 'A1', name: 'Qazanmadınız', tier: 'E', weight: 0.000 },
   { id: 'C2', name: 'Kaşelok', tier: 'C', weight: 14 },
   { id: 'C3', name: 'Kəmər', tier: 'C', weight: 14 },
-  { id: 'C4', name: 'Qolbaq', tier: 'C', weight: 14 },
-  { id: 'C5', name: 'Saat', tier: 'C', weight: 14 },
+  { id: 'C4', name: 'Qolbaq', tier: 'C', weight: 14.99 },
+  { id: 'A1', name: 'Qazanmadınız', tier: 'E', weight: 0.000 },
+  { id: 'C5', name: 'Saat', tier: 'C', weight: 14.99 },
   // D Tier (25% total, 4 items 6.25% each)
   { id: 'D1', name: '2 - 10', tier: 'D', weight: 6.25 },
   { id: 'D2', name: 'Indi 10', tier: 'D', weight: 6.25 },
+  { id: 'A1', name: 'Qazanmadınız', tier: 'E', weight: 0.000 },
   { id: 'D3', name: 'Dostunla 5', tier: 'D', weight: 6.25 },
   { id: 'D4', name: 'Paylaş 5', tier: 'D', weight: 6.25 },
   // E Tier (special first-spin items) - empty in GIFTS as none were provided earlier;
@@ -653,5 +659,3 @@ modalOk.addEventListener('click', closeResultModal);
 
 
 /* End of script.js */
-
-
