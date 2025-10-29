@@ -120,7 +120,7 @@ let radius = 0;
 /** Compute size relative to parent container */
 function computeVisualSize() {
   const wrapRect = wheelWrap.getBoundingClientRect();
-  return Math.min(wrapRect.width, window.innerHeight * 0.8);
+  return Math.min(wrapRect.width, window.innerHeight * 2);
 }
 
 /** Setup canvas scaling for device pixel ratio */
