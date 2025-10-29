@@ -265,6 +265,7 @@ body{
 .tier-B{ background: linear-gradient(180deg,#d6c0a1,#b68c56); color:#06121a; }
 .tier-C{ background: linear-gradient(180deg,#9fe6c9,#7bdca3); color:#04261d; }
 .tier-D{ background: linear-gradient(180deg,#a9d8ff,#6faefc); color:#05263a; }
+.tier-E{ background: linear-gradient(180deg,#F50707,#F50707); color:#F50707; }
 
 /* ---------- Modal ---------- */
 .modal{
