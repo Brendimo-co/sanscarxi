@@ -261,12 +261,12 @@ body{
   font-size:12px;
   color:#06121a;
 }
-.tier-A{ background: linear-gradient(180deg,#ffd54d,#ffb800); }
-.tier-B{ background: linear-gradient(180deg,#d6c0a1,#b68c56); color:#06121a; }
-.tier-C{ background: linear-gradient(180deg,#9fe6c9,#7bdca3); color:#04261d; }
-.tier-D{ background: linear-gradient(180deg,#a9d8ff,#6faefc); color:#05263a; }
+.tier-A{ background: linear-gradient(135deg, #FFEA70, #FFC300, #B8860B);}
+.tier-B{ background: linear-gradient(135deg, #C266FF, #8B00FF, #4B0082);}
+.tier-C{ background: linear-gradient(135deg, #4A90E2, #0047AB, #001F5B); }
+.tier-D{ background: linear-gradient(135deg, #FFEA70, #FFC300, #B8860B);}
 .tier-E{ background: linear-gradient(180deg,#F50707,#F50707); color:#F50707; }
-
+.tier-F{ background: linear-gradient(135deg, #FF4C4C, #E10600, #8B0000); }
 /* ---------- Modal ---------- */
 .modal{
   position:fixed;
