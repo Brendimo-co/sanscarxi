@@ -109,14 +109,42 @@ function weightedRandomPick(allowE = false) {
 /* ===========================
 Canvas wheel rendering + animation
 =========================== */
-const canvas = wheelCanvas;
-const ctx = canvas.getContext('2d');
-let canvasSize = Math.min(canvas.width, canvas.height);
-let center = { x: canvas.width / 1, y: canvas.height / 1 };
-let radius = canvasSize / 1 - 0;
+const ctx = wheelCanvas.getContext("2d");
 let currentRotation = 0;
 let isSpinning = false;
 let lastRenderedPool = [];
+let center = { x: 0, y: 0 };
+let radius = 0;
+
+/** Compute size relative to parent container */
+function computeVisualSize() {
+  const wrapRect = wheelWrap.getBoundingClientRect();
+  return Math.min(wrapRect.width, window.innerHeight * 0.8);
+}
+
+/** Setup canvas scaling for device pixel ratio */
+function setCanvasSize(size) {
+  const dpr = window.devicePixelRatio || 1;
+  wheelCanvas.width = size * dpr;
+  wheelCanvas.height = size * dpr;
+  wheelCanvas.style.width = size + "px";
+  wheelCanvas.style.height = size + "px";
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  center = { x: wheelCanvas.width / (2 * dpr), y: wheelCanvas.height / (2 * dpr) };
+  radius = size / 2 - 20;
+}
+
+/** Resize + redraw */
+function resizeAndDraw() {
+  const size = computeVisualSize();
+  setCanvasSize(size);
+  drawWheel(lastRenderedPool.length ? lastRenderedPool : GIFTS.filter(g => g.tier !== 'E'));
+}
+
+/* Responsive observers */
+window.addEventListener('resize', () => requestAnimationFrame(resizeAndDraw));
+window.addEventListener('orientationchange', resizeAndDraw);
+window.addEventListener('load', resizeAndDraw);
 
 
 function shadeColor(hex, percent) {
