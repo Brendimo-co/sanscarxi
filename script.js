@@ -41,30 +41,30 @@ const GIFTS = [
   { id: 'A1', name: 'Ödənişsiz Seç', tier: 'A', weight: 0.000 },
   // B Tier (total 4.95%, 10 items each 0.495%)
   { id: 'B1', name: '15 AZN Endirim', tier: 'B', weight: 0.000 },
-  { id: 'A1', name: 'Qazanmadınız', tier: 'E', weight: 0.005 },
   { id: 'B2', name: 'La Coste Qolbaq', tier: 'B', weight: 0.495 },
+  { id: 'F1', name: 'Qazanmadınız', tier: 'F', weight: 0.005 },
   { id: 'B3', name: 'La Coste Parfüm', tier: 'B', weight: 0.495 },
   { id: 'B4', name: 'Qalstuk Dəsti', tier: 'B', weight: 0.000 },
   { id: 'B5', name: 'Armani Parfüm', tier: 'B', weight: 0.495 },
-  { id: 'A1', name: 'Qazanmadınız', tier: 'E', weight: 0.000 },
+  { id: 'F2', name: 'Qazanmadınız', tier: 'F', weight: 0.000 },
   { id: 'B6', name: 'Hermes Qalstuk', tier: 'B', weight: 0.495 },
   { id: 'B7', name: 'Premium Kəmər', tier: 'B', weight: 0.000 },
   { id: 'B8', name: 'Premium Kaşelok', tier: 'B', weight: 0.000 },
-  { id: 'A1', name: 'Qazanmadınız', tier: 'E', weight: 0.000 },
+  { id: 'F3', name: 'Qazanmadınız', tier: 'F', weight: 0.000 },
   { id: 'B9', name: 'Təsbeh', tier: 'B', weight: 0.495 },
   { id: 'B10', name: 'Qələm', tier: 'B', weight: 0.495 },
   // C Tier (70% total, 5 items 14% each)
   { id: 'C1', name: '5 AZN Endirim', tier: 'C', weight: 14 },
-  { id: 'A1', name: 'Qazanmadınız', tier: 'E', weight: 0.000 },
+  { id: 'F4', name: 'Qazanmadınız', tier: 'F', weight: 0.000 },
   { id: 'C2', name: 'Kaşelok', tier: 'C', weight: 14 },
   { id: 'C3', name: 'Kəmər', tier: 'C', weight: 14 },
   { id: 'C4', name: 'Qolbaq', tier: 'C', weight: 14.99 },
-  { id: 'A1', name: 'Qazanmadınız', tier: 'E', weight: 0.000 },
+  { id: 'F5', name: 'Qazanmadınız', tier: 'F', weight: 0.000 },
   { id: 'C5', name: 'Saat', tier: 'C', weight: 14.99 },
   // D Tier (25% total, 4 items 6.25% each)
   { id: 'D1', name: '2 - 10', tier: 'D', weight: 6.25 },
   { id: 'D2', name: 'Indi 10', tier: 'D', weight: 6.25 },
-  { id: 'A1', name: 'Qazanmadınız', tier: 'E', weight: 0.000 },
+  { id: 'F6', name: 'Qazanmadınız', tier: 'F', weight: 0.000 },
   { id: 'D3', name: 'Dostunla 5', tier: 'D', weight: 6.25 },
   { id: 'D4', name: 'Paylaş 5', tier: 'D', weight: 6.25 },
   // E Tier (special first-spin items) - empty in GIFTS as none were provided earlier;
@@ -181,11 +181,11 @@ function drawWheel(pool) {
     const tier = pool[i].tier;
     let color;
     switch (tier) {
-      case 'A': color = '#ffd700'; break;
-      case 'B': color = '#c59f78'; break;
-      case 'C': color = '#8ccf9b'; break;
-      case 'D': color = '#7fb0ff'; break;
-      case 'E': color = '#ff8fa3'; break;
+      case 'A': color = '#00A86B'; break;
+      case 'B': color = '#8B00FF'; break;
+      case 'C': color = '#0047AB'; break;
+      case 'D': color = '#B8860B'; break;
+      case 'F': color = '#E10600'; break;
       default: color = '#6b6b6b';
     }
     const alt = i % 2 === 0 ? color : shadeColor(color, -8);
