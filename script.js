@@ -109,6 +109,7 @@ function weightedRandomPick(allowE = false) {
 /* ===========================
 Canvas wheel rendering + animation
 =========================== */
+const canvas = wheelCanvas;
 const ctx = wheelCanvas.getContext("2d");
 let currentRotation = 0;
 let isSpinning = false;
