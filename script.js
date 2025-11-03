@@ -536,7 +536,7 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
       modalActions.appendChild(takeBtn);
       modalActions.appendChild(retryBtn);
     } else if (spinNumberToday === 3) {
-      instr = 'Təbrik edirik!' + selected.name + ' qazandın. 30 dəqiqə ərzində sifarişi tamamla, hədiyyən 2x (iki qat) olsun.';
+      instr = 'Təbrik edirik! ' + selected.name + ' qazandın. 30 dəqiqə ərzində sifarişi tamamla, hədiyyən 2x (iki qat) olsun.';
       const okBtn = document.createElement('button');
       okBtn.className = 'btn primary';
       okBtn.innerText = 'Bitir';
