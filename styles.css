@@ -41,7 +41,7 @@ html,body{height:100%}
 body{
   margin:0;
   min-height:100%;
-  font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui;
+  font-family: Inter, "Poppins", Roboto, "Arial", Arial, system-ui;
   background: var(--bg-velvet);
   color:var(--text);
   -webkit-font-smoothing:antialiased;
@@ -56,7 +56,7 @@ body{
 /* ---------- Header ---------- */
 .brand{ display:flex; flex-direction:column; gap:6px; }
 .brand h1{ margin:0; font-size:20px; font-weight:800; letter-spacing:0.2px; color:var(--text); text-shadow: 0 8px 30px rgba(0,0,0,0.6); }
-.subtitle{ margin:0; color:var(--muted); font-size:13px; }
+.subtitle{ margin:20; color:var(--muted); font-size:18px; }
 
 /* ---------- Form ---------- */
 .form-section{
@@ -283,12 +283,12 @@ body{
   width:100%;
   max-width:560px;
   border-radius:16px;
-  padding:18px;
+  padding:22px;
   background: linear-gradient(180deg, rgba(6,12,20,0.98), rgba(8,18,30,0.99));
   border:1px solid rgba(255,255,255,0.04);
   box-shadow: 0 30px 90px rgba(2,6,23,0.85);
 }
-.modal-close{ position:absolute; right:22px; top:20px; background:transparent; color:var(--muted); border:0; font-size:22px; cursor:pointer; }
+.modal-close{ position:absolute; right:22px; top:20px; background:transparent; color:var(--muted); border:10; font-size:22px; cursor:pointer; }
 .big{ font-size:20px; font-weight:900; margin:8px 0 6px 0; color:#fff; }
 .muted{ color:var(--muted); margin:0 0 8px 0; }
 .instructions{ min-height:44px; color:var(--muted); }
