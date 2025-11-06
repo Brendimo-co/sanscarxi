@@ -545,7 +545,7 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
       modalActions.appendChild(takeBtn);
       modalActions.appendChild(retryBtn);
     } else if (spinNumberToday === 3) {
-      instr = '🔥 Təbriklər! Son çarxda ' + selected.name + ' qazandınız. Tələs! 30 dəqiqə ərzində sifariş et, hədiyyən ikiqat artsın! 🚀, 💳 Kart nömrəsi: 4169738838586760 , Kart sahibi: Leyla M....';
+      instr = '🔥 Təbriklər! Son çarxda ' + selected.name + ' qazandınız. Tələs! 30 dəqiqə ərzində 10 AZN beh ödə, sifarişini tamamla, hədiyyən ikiqat artsın! 🚀, 💳 Kart nömrəsi: 4169738838586760 , Kart sahibi: Leyla M....';
       const okBtn = document.createElement('button');
       okBtn.className = 'btn primary';
       okBtn.innerText = 'Bitir';
