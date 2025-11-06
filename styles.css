@@ -51,6 +51,16 @@ body{
   justify-content:center;
   align-items:flex-start;
 }
+/* 🔥 Add this for iPhone & mobile safe area support */
+@supports(padding: max(0px)) {
+  @media (max-width: 768px) {
+    body {
+      padding-top: max(env(safe-area-inset-top), 18px);
+    }
+  }
+}
+
+
 
 /
 /* ---------- Header ---------- */
