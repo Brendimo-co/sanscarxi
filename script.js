@@ -68,6 +68,15 @@ const GIFTS = [
 Helpers
 =========================== */
 
+const now = new Date();
+const hours = now.getHours();
+const minutes = now.getMinutes().toString().padStart(2, '0');
+const timeText = `Saat ${hours}.${minutes}. Bir şey dəyişəcək… Hiss et və Çevir 🎁!`;
+
+document.getElementById('main-title').textContent = timeText;
+
+
+
 function sanitizePhone(raw) {
   let s = (raw || '').trim();
   s = s.replace(/[^\d+]/g, '');
@@ -399,7 +408,7 @@ spinBtn.addEventListener('click', async function() {
 
   let selected;
   if (nextSpinToday === 1) {
-    selected = GIFTS.find(g => g.tier === 'F' && /Qazanmad/i.test(g.name)) || { id: 'F_custom', name: 'Qazanmadınız', tier: 'F', weight: 0 };
+    selected = GIFTS.find(g => g.tier === 'F' && /Qazanmad/i.test(g.name)) || { id: 'F_custom', name: 'Bu dəfə alınmadı — amma taleyin ikinci şansı var.', tier: 'F', weight: 0 };
   } else if (nextSpinToday === 2) {
     selected = GIFTS.find(g => g.name && /3\s*AZN|3 AZN/i.test(g.name)) || { id: 'B_3azn', name: '3 AZN Endirim', tier: 'B', weight: 0 };
   } else if (nextSpinToday === 3) {
@@ -498,20 +507,20 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
     let instr = '';
 
     if (spinNumberToday === 1) {
-      instr = 'Təəssüf ki, qazanmadınız!. Sənin üçün bir şans daha veririk. Şansını yenidən yoxla! ';
+      instr = 'Yaxın idin! Təəssüf ki, bu dəfə alınmadı, amma kim deyir ikinci dəfə olmayacaq? 😅 ';
       const retryBtn = document.createElement('button');
       retryBtn.className = 'btn primary';
-      retryBtn.innerText = 'Yenidən çevir';
+      retryBtn.innerText = '2-ci şansını indi yoxla!';
       retryBtn.addEventListener('click', () => {
         closeResultModal();
         enableWheelUI();
       });
       modalActions.appendChild(retryBtn);
     } else if (spinNumberToday === 2) {
-      instr = '3 AZN Endirim Qazandın!. Əgər istərsən 3 AZN endirimi götürə və ya yenidən çevirə bilərsən!.';
+      instr = '3 AZN endirim qazandın 💥 Amma bəlkə bu sadəcə başlanğıcdır? Yenidən fırlat, bəlkə bu dəfə JACKPOT!!.';
       const takeBtn = document.createElement('button');
       takeBtn.className = 'btn';
-      takeBtn.innerText = '3 AZN götür';
+      takeBtn.innerText = 'Endirimi Götür 💸';
       takeBtn.addEventListener('click', () => {
         try {
           const sessRaw = sessionStorage.getItem('brendimo_current');
@@ -523,12 +532,12 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
             saveState(sess.phone, st);
           }
         } catch (e) { console.warn(e); }
-        alert('3 AZN endiriminiz qeydə alındı. Sifariş üçün DM vasitəsilə əlaqə saxlayın.');
+        alert('🔥 Təbriklər, 3 AZN qazandınız!. 30 dəqiqə ərzində 10 AZN beh ödə, sifarişini tamamla, qazancın 6 AZN olsun! 💳 Kart nömrəsi: 4169738838586760 , Kart sahibi: Leyla M....');
         closeResultModal();
       });
       const retryBtn = document.createElement('button');
       retryBtn.className = 'btn primary';
-      retryBtn.innerText = 'Yenidən çevir';
+      retryBtn.innerText = 'Risk Et və Fırlat';
       retryBtn.addEventListener('click', () => {
         closeResultModal();
         enableWheelUI();
@@ -536,7 +545,7 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
       modalActions.appendChild(takeBtn);
       modalActions.appendChild(retryBtn);
     } else if (spinNumberToday === 3) {
-      instr = 'Təbrik edirik! ' + selected.name + ' qazandın. 30 dəqiqə ərzində sifarişi tamamla, hədiyyən 2x (iki qat) olsun.';
+      instr = '🔥 Təbriklər! Son çarxda ' + selected.name + ' qazandınız. Tələs! 30 dəqiqə ərzində sifariş et, hədiyyən ikiqat artsın! 🚀, 💳 Kart nömrəsi: 4169738838586760 , Kart sahibi: Leyla M....';
       const okBtn = document.createElement('button');
       okBtn.className = 'btn primary';
       okBtn.innerText = 'Bitir';
