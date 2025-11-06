@@ -46,7 +46,7 @@ body{
   color:var(--text);
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
-  padding:18px;
+  padding: calc(env(safe-area-inset-top) + 18px) 18px 18px 18px;
   display:flex;
   justify-content:center;
   align-items:flex-start;
