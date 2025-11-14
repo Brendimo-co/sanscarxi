@@ -518,7 +518,7 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
       });
       modalActions.appendChild(retryBtn);
     } else if (spinNumberToday === 2) {
-      instr = '🔥 Ümumi qazancın 4 AZN \n 💛 15 dəqiqə ərzində beh ödə → qazancın 2x = 8 AZN olsun!\n';
+      instr = '🔥 Ümumi qazancın 4 AZN \n 💛 15 dəqiqə ərzində beh ödə → qazancın 2x = 8 AZN olsun!\n ✔ Beh sonda çıxıldığından, əslində itirmirsiniz – qazancınız artır. \n';
       const takeBtn = document.createElement('button');
       takeBtn.className = 'btn';
       takeBtn.innerText = '8 AZN Endirimi Götür 💸';
