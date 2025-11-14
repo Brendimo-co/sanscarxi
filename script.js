@@ -36,30 +36,31 @@ Gifts configuration
 =========================== */
 
 const GIFTS = [
-  { id: 'A1', name: 'Ödənişsiz Seç', tier: 'A', weight: 0.000 },
+  { id: 'A1', name: '100 AZN Hədiyyə kartı', tier: 'A', weight: 0.000 },
   { id: 'B1', name: '15 AZN Endirim', tier: 'B', weight: 0.000 },
   { id: 'B2', name: 'La Coste Qolbaq', tier: 'B', weight: 0.495 },
-  { id: 'F1', name: 'Qazanmadınız', tier: 'F', weight: 13.995 },
+  { id: 'F2', name: 'Qazanmadınız', tier: 'F', weight: 13.995 },
   { id: 'B3', name: 'La Coste Parfüm', tier: 'B', weight: 0.495 },
   { id: 'B4', name: 'Qalstuk Dəsti', tier: 'B', weight: 0.000 },
   { id: 'B5', name: 'Armani Parfüm', tier: 'B', weight: 0.495 },
-  { id: 'F2', name: 'Qazanmadınız', tier: 'F', weight: 17.495 },
+  { id: 'F1', name: '1 AZN Endirim', tier: 'F', weight: 17.495 },
   { id: 'B6', name: 'Hermes Qalstuk', tier: 'B', weight: 0.495 },
   { id: 'B7', name: 'Premium Kəmər', tier: 'B', weight: 0.000 },
   { id: 'B8', name: 'Premium Kaşelok', tier: 'B', weight: 0.000 },
-  { id: 'F3', name: 'Qazanmadınız', tier: 'F', weight: 13 },
-  { id: 'B9', name: '3 AZN Endirim', tier: 'B', weight: 0.000 },
+ 
+  { id: 'B9', name: '4 AZN Endirim', tier: 'B', weight: 0.000 },
   { id: 'B10', name: 'Qələm', tier: 'B', weight: 0.495 },
   { id: 'C1', name: '5 AZN Endirim', tier: 'C', weight: 1 },
-  { id: 'F4', name: 'Qazanmadınız', tier: 'F', weight: 20 },
+ 
   { id: 'C2', name: 'Kaşelok', tier: 'C', weight: 1 },
   { id: 'C3', name: 'Kəmər', tier: 'C', weight: 1 },
   { id: 'C4', name: 'Qolbaq', tier: 'C', weight: 1 },
-  { id: 'F5', name: 'Qazanmadınız', tier: 'F', weight: 19 },
+
   { id: 'C5', name: 'Saat', tier: 'C', weight: 1 },
+   { id: 'C6', name: 'Parfüm', tier: 'C', weight: 1 },
   { id: 'D1', name: '2 - 10', tier: 'D', weight: 0.25 },
   { id: 'D2', name: 'Indi 10', tier: 'D', weight: 0.25 },
-  { id: 'F6', name: 'Qazanmadınız', tier: 'F', weight: 1.99 },
+ 
   { id: 'D3', name: 'Dostunla 5', tier: 'D', weight: 6.25 },
   { id: 'D4', name: 'Paylaş 5', tier: 'D', weight: 0.25 }
 ];
@@ -191,6 +192,7 @@ function drawWheel(pool) {
       case 'C': color = '#0047AB'; break;
       case 'D': color = '#B8860B'; break;
       case 'F': color = '#E10600'; break;
+      case 'G': color = '#E10600'; break;
       default: color = '#6b6b6b';
     }
     const alt = i % 2 === 0 ? color : shadeColor(color, -8);
@@ -394,7 +396,7 @@ Consolidated spin handler (first-3-spins deterministic)
 spinBtn.addEventListener('click', async function() {
   if (spinBtn.disabled || isSpinning) return;
   const sessRaw = sessionStorage.getItem('brendimo_current');
-  if (!sessRaw) { alert('Əvvəlcə formu doldurun və serverə göndərin'); return; }
+  if (!sessRaw) { alert('Əvvəlcə formu doldurun və göndərin'); return; }
   const sess = JSON.parse(sessRaw);
   const phone = sess.phone;
   const name = sess.name;
@@ -410,9 +412,9 @@ spinBtn.addEventListener('click', async function() {
   if (nextSpinToday === 1) {
     selected = GIFTS.find(g => g.tier === 'F' && /Qazanmad/i.test(g.name)) || { id: 'F_custom', name: 'Bu dəfə alınmadı — amma taleyin ikinci şansı var.', tier: 'F', weight: 0 };
   } else if (nextSpinToday === 2) {
-    selected = GIFTS.find(g => g.name && /3\s*AZN|3 AZN/i.test(g.name)) || { id: 'B_3azn', name: '3 AZN Endirim', tier: 'B', weight: 0 };
+    selected = GIFTS.find(g => g.name && /3\s*AZN|3 AZN/i.test(g.name)) || { id: 'B_3azn', name: '4 AZN Endirim', tier: 'B', weight: 0 };
   } else if (nextSpinToday === 3) {
-    const choices = ['5 AZN Endirim', 'Kaşelok', 'Kəmər', 'Qolbaq', 'Saat'];
+    const choices = ['Parfüm', 'Kaşelok', 'Kəmər', 'Qolbaq', 'Saat'];
     const choiceName = choices[Math.floor(Math.random() * choices.length)];
     selected = GIFTS.find(g => g.name === choiceName) || { id: 'C3_special_' + choiceName.replace(/\s+/g,'_'), name: choiceName, tier: 'C', weight: 0 };
   } else {
@@ -507,20 +509,22 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
     let instr = '';
 
     if (spinNumberToday === 1) {
-      instr = 'Yaxın idin! Təəssüf ki, bu dəfə alınmadı, amma kim deyir ikinci dəfə olmayacaq? 😅 ';
+      instr = '🎉 1 AZN qazandın! İstərsən bir daha Çevir – növbəti çarx daha böyük qazanc gətirər.
+ ';
       const retryBtn = document.createElement('button');
       retryBtn.className = 'btn primary';
-      retryBtn.innerText = '2-ci şansını indi yoxla!';
+      retryBtn.innerText = '👉 Yenidən sına!';
       retryBtn.addEventListener('click', () => {
         closeResultModal();
         enableWheelUI();
       });
       modalActions.appendChild(retryBtn);
     } else if (spinNumberToday === 2) {
-      instr = '3 AZN endirim qazandın 💥 Amma bəlkə bu sadəcə başlanğıcdır? Yenidən fırlat, bəlkə bu dəfə JACKPOT!!.';
+      instr = '🔥 Ümumi qazancın: 4 AZN
+💛 15 dəqiqə ərzində beh ödə → qazancın 2x = 8 AZN olsun!';
       const takeBtn = document.createElement('button');
       takeBtn.className = 'btn';
-      takeBtn.innerText = 'Endirimi Götür 💸';
+      takeBtn.innerText = '8 AZN Endirimi Götür 💸';
       takeBtn.addEventListener('click', () => {
         try {
           const sessRaw = sessionStorage.getItem('brendimo_current');
@@ -532,7 +536,18 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
             saveState(sess.phone, st);
           }
         } catch (e) { console.warn(e); }
-        alert('🔥 Təbriklər, 3 AZN qazandınız!. 30 dəqiqə ərzində 10 AZN beh ödə, sifarişini tamamla, qazancın 6 AZN olsun! 💳 Kart nömrəsi: 4169738838586760 , Kart sahibi: Leyla M....');
+        alert('🎉 Təbriklər! 4 AZN bonus qazandın!
+Bu gün şanslı tərəfdəsən ✨
+
+💡 İndi 10 AZN beh ödə → bonusun avtomatik 8 AZN-ə yüksəlsin!
+(Yəni 4 AZN də əlavə qazanırsan)
+
+⏳ Bonus yalnız 15 dəqiqə aktivdir.
+
+✔ Beh sonda çıxıldığından, əslində itirmirsiniz – qazancınız artır.
+   
+💳 Kart: 4169738838586760
+👤 Leyla M.....');
         closeResultModal();
       });
       const retryBtn = document.createElement('button');
@@ -545,7 +560,10 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
       modalActions.appendChild(takeBtn);
       modalActions.appendChild(retryBtn);
     } else if (spinNumberToday === 3) {
-      instr = '🔥 Təbriklər! Son çarxda ' + selected.name + ' qazandınız. Tələs! 30 dəqiqə ərzində 10 AZN beh ödə, sifarişini tamamla, hədiyyən ikiqat artsın! 🚀, 💳 Kart nömrəsi: 4169738838586760 , Kart sahibi: Leyla M....';
+      instr = '🔥 Təbriklər! Son çarxda ' + selected.name + ' qazandınız. 
+         ⏳ 10 dəqiqə ərzində beh ödə → 8 AZN endirim yenidən aktivləşsin,
+         ✔ Beh sonda çıxıldığından, əslində itirmirsiniz – qazancınız artır.
+         💳 Kart nömrəsi: 4169738838586760 , Kart sahibi: Leyla M....';
       const okBtn = document.createElement('button');
       okBtn.className = 'btn primary';
       okBtn.innerText = 'Bitir';
@@ -599,7 +617,7 @@ function renderHistory(state) {
   }
   for (let s of state.spins.slice().reverse()) {
     const li = document.createElement('li');
-    li.innerText = `${new Date(s.date).toLocaleString()} — ${s.giftName} [${s.tier}] (Spin #${s.spinNumber})`;
+    li.innerText = `${new Date(s.date).toLocaleString()} — ${s.giftName} [${s.tier}] (Çarx #${s.spinNumber})`;
     historyList.appendChild(li);
   }
 }
