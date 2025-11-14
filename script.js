@@ -402,7 +402,11 @@ spinBtn.addEventListener('click', async function() {
   // Determine which spin of the day this will be using local history
   const localTodayCount = getLocalSpinsToday(phone);
   const nextSpinToday = (localTodayCount || 0) + 1;
-
+  if (localTodayCount >= 3) {
+    alert("Bu gün artıq 3 dəfə çevirilib.");
+    enableWheelUI();
+    return;
+  }
   let selected;
   if (nextSpinToday === 1) {
     selected = GIFTS.find(g => g.tier === 'F' && /Qazanmad/i.test(g.name)) || { id: 'F_custom', name: '🎉 1 AZN qazandın!', tier: 'F', weight: 0 };
@@ -495,7 +499,7 @@ Modal controls + custom modal variants
 function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
   try {
     resultGiftEl.innerText = selected.name || (resp && resp.gift) || 'Təşəkkür edirik!';
-    resultTierEl.innerText = 'Kateqoriya: ' + (selected.tier || (resp && resp.tier) || '');
+    resultTierEl.innerText = ' ' + (selected.tier || (resp && resp.tier) || '');
 
     // Clear existing modal actions
     const modalActions = resultModal.querySelector('.modal-actions');
@@ -581,6 +585,8 @@ function closeResultModal() {
 
 closeModal.addEventListener('click', closeResultModal);
 modalOk.addEventListener('click', closeResultModal);
+
+
 
 /* ===========================
 History rendering
