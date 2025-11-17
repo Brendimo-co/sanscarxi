@@ -518,10 +518,10 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
       });
       modalActions.appendChild(retryBtn);
     } else if (spinNumberToday === 2) {
-      instr = '🔥 Ümumi qazancın 4 AZN \n 💛 Öncədən beh ödə, sifarişi təsdiqlə → Endirim 8 AZN olsun!\n ✔ Ödədiyin beh son ödənişdən çıxılır. \n';
+      instr = '🔥 Ümumi qazancın 4 AZN \n 💛 Endirimi qəbul edə və ya yenidən çarx çevirə bilərsiniz. \n';
       const takeBtn = document.createElement('button');
       takeBtn.className = 'btn';
-      takeBtn.innerText = '8 AZN Endirimi Götür 💸';
+      takeBtn.innerText = '4 AZN Endirimi Götür 💸';
       takeBtn.addEventListener('click', () => {
         try {
           const sessRaw = sessionStorage.getItem('brendimo_current');
@@ -538,7 +538,7 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
       });
       const retryBtn = document.createElement('button');
       retryBtn.className = 'btn primary';
-      retryBtn.innerText = 'Risk Et və Fırlat';
+      retryBtn.innerText = 'Risk Et və Çevir';
       retryBtn.addEventListener('click', () => {
         closeResultModal();
         enableWheelUI();
@@ -546,7 +546,7 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
       modalActions.appendChild(takeBtn);
       modalActions.appendChild(retryBtn);
     } else if (spinNumberToday === 3) {
-      instr = '🔥 Təbriklər! Son çarxda ' + selected.name + ' qazandın. \n ' + selected.name + ' hədiyyən növbəti sifarişinlə birlikdə göndəriləcək. \n ⏳ 8 AZN Endirimi aktivləşdirmək istəsən, 60 dəqiqə ərzində beh ödə, sifarişi təsdiqlə → 8 AZN endirim yenidən aktivləşsin, \n ✔ Ödədiyin beh son ödənişdən çıxılır. \n';
+      instr = '🔥 Təbriklər! Son çarxda ' + selected.name + ' qazandın. \n ' + selected.name + ' hədiyyən növbəti sifarişinlə birlikdə göndəriləcək. \n ⏳ 60 dəqiqə ərzində 10 AZN beh ödə, sifarişi təsdiqlə → Həm ' + selected.name + ', həm də 4 AZN endirim əldə et!, \n ✔ Ödədiyin beh son ödənişdən çıxılır. \n';
       const okBtn = document.createElement('button');
       okBtn.className = 'btn primary';
       okBtn.innerText = 'Bitir';
