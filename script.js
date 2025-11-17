@@ -508,7 +508,7 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
     let instr = '';
 
     if (spinNumberToday === 1) {
-      instr = '\n Bir daha Çevir – növbəti çarx daha böyük qazanc ola bilər.\n';
+      instr = '\n Adətən Çarx, yalnız bir dəfə fırladılır. \n Bu gün sənə istisna edirik — yenidən çevir.\n';
       const retryBtn = document.createElement('button');
       retryBtn.className = 'btn primary';
       retryBtn.innerText = '👉 Yenidən sına!';
