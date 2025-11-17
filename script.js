@@ -518,7 +518,7 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
       });
       modalActions.appendChild(retryBtn);
     } else if (spinNumberToday === 2) {
-      instr = '🔥 Ümumi qazancın 4 AZN \n 💛 15 dəqiqə ərzində beh ödə → qazancın 2x = 8 AZN olsun!\n ✔ Ödədiyin beh son ödənişdən çıxılır. \n';
+      instr = '🔥 Ümumi qazancın 4 AZN \n 💛 Öncədən beh ödə, sifarişi təsdiqlə → Endirim 8 AZN olsun!\n ✔ Ödədiyin beh son ödənişdən çıxılır. \n';
       const takeBtn = document.createElement('button');
       takeBtn.className = 'btn';
       takeBtn.innerText = '8 AZN Endirimi Götür 💸';
@@ -533,7 +533,7 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
             saveState(sess.phone, st);
           }
         } catch (e) { console.warn(e); }
-        alert('🎉 Təbriklər! 4 AZN bonus qazandın! \n Bu gün şanslı tərəfdəsən ✨ \n 💡 İndi 10 AZN beh ödə → bonusun avtomatik 8 AZN-ə yüksəlsin! (Yəni 4 AZN də əlavə qazanırsan) \n ⏳ Bonus yalnız 15 dəqiqə aktivdir. \n ✔ Ödədiyin beh son ödənişdən çıxılır.\n 💳 Kart: 4169738838586760 \n 👤 Leyla M.....\n');
+        alert('🎉 Təbriklər! 4 AZN endirim qazandın! \n 💡 10 AZN beh ödə → endirim avtomatik 8 AZN olsun! (Yəni 4 AZN də əlavə qazanırsan) \n ⏳ Bonus yalnız 60 dəqiqə aktivdir. \n ✔ Ödədiyin beh son ödənişdən çıxılır.\n');
         closeResultModal();
       });
       const retryBtn = document.createElement('button');
@@ -546,7 +546,7 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
       modalActions.appendChild(takeBtn);
       modalActions.appendChild(retryBtn);
     } else if (spinNumberToday === 3) {
-      instr = '🔥 Təbriklər! Son çarxda ' + selected.name + ' qazandınız. \n ⏳ 10 dəqiqə ərzində beh ödə → 8 AZN endirim yenidən aktivləşsin, \n ✔ Ödədiyin beh son ödənişdən çıxılır. \n 💳 Kart nömrəsi: 4169738838586760 , \n Kart sahibi: 👤 Leyla M....';
+      instr = '🔥 Təbriklər! Son çarxda ' + selected.name + ' qazandın. \n ' + selected.name + ' hədiyyən növbəti sifarişinlə birlikdə göndəriləcək. \n ⏳ 8 AZN Endirimi aktivləşdirmək istəsən, 60 dəqiqə ərzində beh ödə, sifarişi təsdiqlə → 8 AZN endirim yenidən aktivləşsin, \n ✔ Ödədiyin beh son ödənişdən çıxılır. \n';
       const okBtn = document.createElement('button');
       okBtn.className = 'btn primary';
       okBtn.innerText = 'Bitir';
