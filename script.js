@@ -403,17 +403,17 @@ spinBtn.addEventListener('click', async function() {
   const localTodayCount = getLocalSpinsToday(phone);
   const nextSpinToday = (localTodayCount || 0) + 1;
   if (localTodayCount >= 3) {
-    alert("Bu gün artıq 3 dəfə çevirilib.");
+    alert("Bu gün üçün ödənişsiz çarx şansını artıq istifadə etdiniz.");
     enableWheelUI();
     return;
   }
   let selected;
   if (nextSpinToday === 1) {
-    selected = GIFTS.find(g => g.tier === 'F' && /Qazanmad/i.test(g.name)) || { id: 'F_custom', name: '🎉 1 AZN qazandın!', tier: 'F', weight: 0 };
+    selected = GIFTS.find(g => g.tier === 'F' && /Qazanmad/i.test(g.name)) || { id: 'F_custom', name: '3 AZN Endirim', tier: 'F', weight: 0 };
   } else if (nextSpinToday === 2) {
-    selected = GIFTS.find(g => g.name && /3\s*AZN|3 AZN/i.test(g.name)) || { id: 'B_3azn', name: '3 AZN Endirim', tier: 'B', weight: 0 };
+    selected = GIFTS.find(g => g.name && /Saat/i.test(g.name)) || { id: 'C5', name: 'Saat', tier: 'B', weight: 0 };
   } else if (nextSpinToday === 3) {
-    const choices = ['Parfüm', 'Kaşelok', 'Kəmər', 'Qolbaq', 'Saat'];
+    const choices = ['Qolbaq', 'Qolbaq', 'Qolbaq', 'Qolbaq', 'Qolbaq'];
     const choiceName = choices[Math.floor(Math.random() * choices.length)];
     selected = GIFTS.find(g => g.name === choiceName) || { id: 'C3_special_' + choiceName.replace(/\s+/g,'_'), name: choiceName, tier: 'C', weight: 0 };
   } else {
@@ -518,10 +518,10 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
       });
       modalActions.appendChild(retryBtn);
     } else if (spinNumberToday === 2) {
-      instr = '🔥 Ümumi qazancın 4 AZN \n 💛 Endirimi qəbul edə və ya yenidən çarx çevirə bilərsiniz. \n';
+      instr = '🔥 Saat qazandın! \n 💛 3 AZN Endirimi qəbul et və ya Saat ilə birlikdə başqa bir hədiyyə üçün Çarxı çevir! \n';
       const takeBtn = document.createElement('button');
       takeBtn.className = 'btn';
-      takeBtn.innerText = '4 AZN Endirimi Götür 💸';
+      takeBtn.innerText = '3 AZN Endirimi Götür 💸';
       takeBtn.addEventListener('click', () => {
         try {
           const sessRaw = sessionStorage.getItem('brendimo_current');
@@ -533,12 +533,12 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
             saveState(sess.phone, st);
           }
         } catch (e) { console.warn(e); }
-        alert('🎉 Təbriklər! 4 AZN endirim qazandın! \n 💡 10 AZN beh ödə → endirim avtomatik 8 AZN olsun! (Yəni 4 AZN də əlavə qazanırsan) \n ⏳ Bonus yalnız 60 dəqiqə aktivdir. \n ✔ Ödədiyin beh son ödənişdən çıxılır.\n');
+        alert('🎉 Təbriklər! 3 AZN endirim qazandın! \n 💡 10 AZN beh ödə → endirim avtomatik 6 AZN olsun! (Yəni 3 AZN də əlavə qazanırsan) \n ⏳ Bonus yalnız 60 dəqiqə aktivdir. \n ✔ Ödədiyin beh son ödənişdən çıxılır.\n');
         closeResultModal();
       });
       const retryBtn = document.createElement('button');
       retryBtn.className = 'btn primary';
-      retryBtn.innerText = 'Risk Et və Çevir';
+      retryBtn.innerText = 'Növbəti hədiyyə üçün Çevir';
       retryBtn.addEventListener('click', () => {
         closeResultModal();
         enableWheelUI();
@@ -546,7 +546,7 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
       modalActions.appendChild(takeBtn);
       modalActions.appendChild(retryBtn);
     } else if (spinNumberToday === 3) {
-      instr = '🔥 Təbriklər! Son çarxda ' + selected.name + ' qazandın. \n ' + selected.name + ' hədiyyən növbəti sifarişinlə birlikdə göndəriləcək. \n ⏳ 60 dəqiqə ərzində 10 AZN beh ödə, sifarişi təsdiqlə → Həm ' + selected.name + ', həm də 4 AZN endirim əldə et!, \n ✔ Ödədiyin beh son ödənişdən çıxılır. \n';
+      instr = '🔥 Təbriklər! Son çarxda ' + selected.name + ' qazandın. \n 🎁 Möhtəşəm hədiyyə dəsti yaratmaq üçün ' + selected.name + ' və Saat ilə yanaşı Premium Qablaşdırma da hədiyyə edirik. \n ⏳ 60 dəqiqə ərzində 10 AZN beh ödə, Kəmər sifariş et → Həm Kəmər, həm ' + selected.name + ', həm Saat, həm də Premium Qablaşdırma əldə et!, \n ✔ Ödədiyin beh son ödənişdən çıxılır. \n 💝 Premium hədiyyə dəstini görmək üçün bizə yazın.\n 🎀Təklif Limitlidir.\n';
       const okBtn = document.createElement('button');
       okBtn.className = 'btn primary';
       okBtn.innerText = 'Bitir';
