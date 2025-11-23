@@ -67,7 +67,7 @@ Helpers
 const now = new Date();
 const hours = now.getHours();
 const minutes = now.getMinutes().toString().padStart(2, '0');
-const timeText = `Saat ${hours}.${minutes}. Bir şey dəyişəcək… Hiss et və Çevir 🎁!`;
+const timeText = `Saat ${hours}.${minutes}. Xoş niyət tut, Hiss et və Çarxı Çevir 🎁!`;
 
 document.getElementById('main-title').textContent = timeText;
 
