@@ -546,7 +546,7 @@ function showResultModalWithSpinNumber(selected, resp, spinNumberToday) {
       modalActions.appendChild(takeBtn);
       modalActions.appendChild(retryBtn);
     } else if (spinNumberToday === 3) {
-      instr = '🔥 Təbriklər! Son çarxda ' + selected.name + ' qazandın. \n 🎁 Möhtəşəm hədiyyə dəsti yaratmaq üçün ' + selected.name + ' və Saat ilə yanaşı Premium Qablaşdırma da hədiyyə edirik. \n ⏳ 60 dəqiqə ərzində 10 AZN beh ödə, Kəmər sifariş et → Həm Kəmər, həm ' + selected.name + ', həm Saat, həm də Premium Qablaşdırma əldə et!, \n ✔ Ödədiyin beh son ödənişdən çıxılır. \n 💝 Premium hədiyyə dəstini görmək üçün bizə yazın.\n 🎀Təklif Limitlidir.\n';
+      instr = '🔥 Təbriklər! Son çarxda ' + selected.name + ' qazandın. ⏳ 60 dəqiqə ərzində 10 AZN beh ödə, həm ' + selected.name + ', həm də 3 AZN endirim qazan!, \n ✔ Ödədiyin beh son ödənişdən çıxılır. \n 🎀Təklif Limitlidir.\n';
       const okBtn = document.createElement('button');
       okBtn.className = 'btn primary';
       okBtn.innerText = 'Bitir';
