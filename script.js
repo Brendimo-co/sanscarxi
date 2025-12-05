@@ -58,13 +58,13 @@ const GIFTS = [
   { id: 'C4', name: 'Qolbaq', tier: 'A', weight: 1 },
 
   { id: 'C5', name: 'Saat', tier: 'A', weight: 1 },
-   { id: 'C6', name: 'Lips Glow – Qadın bralok', tier: 'A', weight: 1 },
-   { id: 'C7', name: 'FireLine – Kişi alışqanı', tier: 'B', weight: 1 },
+   { id: 'C6', name: 'Qadın bralok', tier: 'A', weight: 1 },
+   { id: 'C7', name: 'Alışqan', tier: 'B', weight: 1 },
    { id: 'C8', name: 'LetterCharm – qadın bralok', tier: 'B', weight: 1 },
    { id: 'C9', name: 'Göz Muncuğu Braloku', tier: 'B', weight: 1 },
    { id: 'C10', name: 'Klassik Bralok', tier: 'F', weight: 1 },
-   { id: 'C11', name: 'PawDrive – Maşın aksesuarı (it)', tier: 'F', weight: 1 },
-   { id: 'C11', name: 'CatDrive – Maşın aksesuarı (pişik)', tier: 'F', weight: 1 },
+   { id: 'C11', name: 'Maşın aksesuarı (it)', tier: 'F', weight: 1 },
+   { id: 'C11', name: 'Maşın aksesuarı (pişik)', tier: 'F', weight: 1 },
    { id: 'C13', name: 'Curren kişi saatı – Model 1', tier: 'C', weight: 1 },
    { id: 'C14', name: 'Curren kişi saatı – Model 2', tier: 'C', weight: 1 },
    { id: 'C15', name: 'Curren kişi saatı – Model 3', tier: 'C', weight: 1 },
@@ -73,7 +73,7 @@ const GIFTS = [
    { id: 'C18', name: 'Curren kişi saatı - Model 4', tier: 'A', weight: 1 },
    { id: 'C19', name: 'Emporio Armani kişi saatı', tier: 'B', weight: 1 },
    { id: 'C20', name: 'Kişi qızılı boyunbağı', tier: 'B', weight: 1 },
-   { id: 'C21', name: 'Kişi qızılı qolbağı', tier: 'B', weight: 1 },
+   { id: 'C21', name: 'Kişi qızılı qolbaq', tier: 'B', weight: 1 },
  
    { id: 'C22', name: 'Parfüm', tier: 'F', weight: 1 }
 ];
@@ -431,7 +431,7 @@ spinBtn.addEventListener('click', async function() {
   } else if (nextSpinToday === 2) {
     selected = GIFTS.find(g => g.name && /1 AZN qazandın!/i.test(g.name)) || { id: 'F1', name: '1 AZN qazandın!', tier: 'B', weight: 0 };
   } else if (nextSpinToday === 3) {
-    const choices = ['Ürək Naxışlı Bralok', 'Lips Glow – Qadın bralok', 'FireLine – Kişi alışqanı', 'LetterCharm – Qadın bralok', 'Göz Muncuğu Braloku','Klassik Bralok','PawDrive – Maşın aksesuarı -it','CatDrive – Maşın aksesuarı pişik','Curren kişi saatı – Model 1','Curren kişi saatı – Model 2','Curren kişi saatı – Model 3','Casio qadın saatı – Model 1','Casio qadın saatı – Model 2','Curren kişi saatı - Model 4','Emporio Armani kişi saatı','Kişi qızılı boyunbağı','Kişi qızılı qolbağı','Qolbaq'];
+    const choices = ['Qadın bralok', 'Alışqan', 'Klassik Bralok','Maşın aksesuarı -it','Maşın aksesuarı pişik','Curren kişi saatı – Model 1','Curren kişi saatı – Model 2','Curren kişi saatı – Model 3','Casio qadın saatı – Model 1','Casio qadın saatı – Model 2','Curren kişi saatı - Model 4','Emporio Armani kişi saatı','Kişi qızılı boyunbağı','Kişi qızılı qolbaq'];
     const choiceName = choices[Math.floor(Math.random() * choices.length)];
     selected = GIFTS.find(g => g.name === choiceName) || { id: 'C3_special_' + choiceName.replace(/\s+/g,'_'), name: choiceName, tier: 'C', weight: 0 };
   } else {
